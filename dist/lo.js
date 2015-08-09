@@ -1,4 +1,4 @@
-/* lo 0.4.0 - http://larsjung.de/lo/ */
+/* lo 0.5.0 - http://larsjung.de/lo/ */
 (function (root, factory) {
     'use strict';
     // istanbul ignore else
@@ -88,7 +88,7 @@
 
 
     function hasLength(x) {
-        return has(x, 'length') && isNumeric(x.length);
+        return is(x) && isNumeric(x.length);
     }
     lo.hasLength = hasLength;
 
