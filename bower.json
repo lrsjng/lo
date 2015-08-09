@@ -1,6 +1,6 @@
 {
   "name": "lo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Lightweight utility library for Node.js and the browser.",
   "homepage": "http://larsjung.de/lo/",
   "authors": [

@@ -1,4 +1,4 @@
-/* lo.js 0.1.0 - http://larsjung.de/lojs/ */
+/* lo 0.4.0 - http://larsjung.de/lo/ */
 (function (root, factory) {
     'use strict';
     // istanbul ignore else
