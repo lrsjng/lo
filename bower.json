@@ -1,0 +1,20 @@
+{
+  "name": "lo",
+  "version": "0.1.0",
+  "description": "Lightweight utility library for Node.js and the browser.",
+  "homepage": "http://larsjung.de/lo/",
+  "authors": [
+    "Lars Jung <lrsjng@gmail.com> (http://larsjung.de)"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lrsjng/lo.git"
+  },
+  "main": "./dist/lo.js",
+  "ignore": [
+    "*",
+    "!dist/*",
+    "!*.md"
+  ]
+}
