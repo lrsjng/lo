@@ -1,4 +1,4 @@
-/* lo 0.5.0 - http://larsjung.de/lo/ */
+/* lo 0.5.1 - http://larsjung.de/lo/ */
 (function (root, factory) {
     'use strict';
     // istanbul ignore else
@@ -70,7 +70,8 @@
 
 
     function isInstanceOf(x, typ) {
-        return isFunction(typ) && x instanceof typ;
+        // return isFunction(typ) && x instanceof typ; // does not work in IE9 for Element etc.
+        return x instanceof typ;
     }
     lo.isInstanceOf = isInstanceOf;
 
