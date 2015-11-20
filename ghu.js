@@ -76,8 +76,7 @@ ghu.task('build:scripts', ['clean'], runtime => {
 
 ghu.task('build:copy', () => {
     return read(`${ROOT}/*.md`)
-        .then(write(mapfn.p(ROOT, BUILD), {overwrite: true}))
-        .then(write(mapfn.p(ROOT, DIST), {overwrite: true}));
+        .then(write(mapfn.p(ROOT, BUILD), {overwrite: true}));
 });
 
 ghu.task('build:zip', ['build:scripts', 'build:copy'], runtime => {
