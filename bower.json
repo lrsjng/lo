@@ -1,10 +1,10 @@
 {
   "name": "lo",
-  "version": "0.5.1",
-  "description": "Lightweight utility library for Node.js and the browser.",
-  "homepage": "http://larsjung.de/lo/",
+  "version": "0.6.0",
+  "description": "Lightweight utility library for the browser.",
+  "homepage": "https://larsjung.de/lo/",
   "authors": [
-    "Lars Jung <lrsjng@gmail.com> (http://larsjung.de)"
+    "Lars Jung <lrsjng@gmail.com> (https://larsjung.de)"
   ],
   "license": "MIT",
   "repository": {

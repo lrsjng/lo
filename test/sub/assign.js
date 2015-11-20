@@ -1,14 +1,10 @@
-'use strict';
+import {inspect} from 'util';
+import lodash from 'lodash';
+import {assert} from 'chai';
+import * as lo from '../..';
 
-var insp = require('util').inspect;
-var lodash = require('lodash');
-var assert = require('chai').assert;
-var lo = require('../..');
-
-describe('.assign()', function () {
-
-    it('is function', function () {
-
+describe('.assign()', () => {
+    it('is function', () => {
         assert.isFunction(lo.assign);
     });
 
@@ -26,14 +22,11 @@ describe('.assign()', function () {
         [[null], {}],
         [[0], {}],
         [[undefined, {a: 1}, {a: 2}, {a: 3}], {a: 3}]
-    ], function (x) {
+    ], x => {
+        const [args, exp] = x;
 
-        var args = x[0];
-        var exp = x[1];
-
-        it('assign(' + insp(args) + ') -> ' + insp(exp), function () {
-
-            var res = lo.assign.apply(undefined, args);
+        it(`assign(${inspect(args)}) -> ${inspect(exp)}`, () => {
+            const res = lo.assign(...args);
             assert.deepEqual(res, exp);
             if (args.length > 0 && lodash.isObject(args[0])) {
                 assert.strictEqual(res, args[0]);

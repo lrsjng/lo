@@ -1,16 +1,13 @@
-'use strict';
+import lodash from 'lodash';
+import {assert} from 'chai';
+import * as lo from '..';
 
-var lodash = require('lodash');
-var assert = require('chai').assert;
-var lo = require('..');
-
-describe('lo', function () {
-
-    it('is plain object', function () {
+describe('lo', () => {
+    it('is plain object', () => {
         assert.isTrue(lodash.isPlainObject(lo));
     });
 
-    it('has the right properties', function () {
+    it('has the right properties', () => {
         // debounce
         // difference
         // intersection
@@ -18,12 +15,16 @@ describe('lo', function () {
         // trim
 
         assert.deepEqual(lodash.keys(lo).sort(), [
+            '__BABEL_FIX__',
             'all',
             'any',
             'asArray',
             'assign',
+            'binder',
+            'cmp',
             'compact',
             'contains',
+            'dom',
             'each',
             'filter',
             'forEach',
@@ -36,6 +37,9 @@ describe('lo', function () {
             'isArray',
             'isBoolean',
             'isDate',
+            'isDocument',
+            'isElDocWin',
+            'isElement',
             'isError',
             'isFunction',
             'isInstanceOf',
@@ -46,19 +50,24 @@ describe('lo', function () {
             'isRegExp',
             'isString',
             'isTypeOf',
+            'isWindow',
             'keys',
             'map',
             'ok',
+            'onPrint',
+            'onReady',
+            'onResize',
             'pluck',
             'reduce',
             'size',
+            'sortBy',
             'toArray',
             'uniq',
             'values'
         ].sort());
     });
 
-    it('works in this environment (.ok is true)', function () {
+    it('works in this environment (.ok is true)', () => {
         assert.isTrue(lo.ok);
     });
 
