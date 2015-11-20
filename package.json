@@ -1,7 +1,7 @@
 {
   "name": "lo",
   "displayName": "lo",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
@@ -12,7 +12,7 @@
     "url": "https://github.com/lrsjng/lo.git"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint lib",
     "mocha": "mocha --compilers js:babel-core/register test/tests.js",
     "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha -- --reporter dot",
     "test": "npm run lint -s && npm run mocha -s"
