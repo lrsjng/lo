@@ -1,18 +1,19 @@
-import {resolve, join} from 'path';
-import dateformat from 'dateformat';
-import ghu from 'ghu';
-import {
-    hash, jszip, mapfn, read, remove, run, uglify, watch,
-    webpack, wrap, write
-} from 'ghu';
+const {resolve, join} = require('path');
+const dateformat = require('dateformat');
+const {
+    default: ghu,
+    autoprefixer, hash, jade, jszip, less, mapfn, read, remove, run, uglify,
+    watch, webpack, wrap, write
+} = require('ghu');
 
 const ROOT = resolve(__dirname);
 const LIB = join(ROOT, 'lib');
 const BUILD = join(ROOT, 'build');
+const TEST = join(ROOT, 'test');
 const DIST = join(ROOT, 'dist');
 const COVERAGE = join(ROOT, 'coverage');
 
-ghu.defaults('build');
+ghu.defaults('release');
 
 ghu.before(runtime => {
     runtime.pkg = Object.assign({}, require('./package.json'));
@@ -44,7 +45,7 @@ ghu.task('lint', () => {
     return run('eslint .', {stdio: 'inherit'});
 });
 
-ghu.task('build:scripts', ['clean'], runtime => {
+ghu.task('build:scripts', runtime => {
     const webpackConfig = {
         output: {},
         module: {
@@ -68,7 +69,7 @@ ghu.task('build:scripts', ['clean'], runtime => {
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/lo.js`, {overwrite: true}))
         .then(write(`${BUILD}/lo-${runtime.pkg.version}.js`, {overwrite: true}))
-        .then(uglify())
+        .then(uglify({compressor: {warnings: false}}))
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/lo.min.js`, {overwrite: true}))
         .then(write(`${BUILD}/lo-${runtime.pkg.version}.min.js`, {overwrite: true}));
@@ -79,18 +80,56 @@ ghu.task('build:copy', () => {
         .then(write(mapfn.p(ROOT, BUILD), {overwrite: true}));
 });
 
-ghu.task('build:zip', ['build:scripts', 'build:copy'], runtime => {
+ghu.task('build:test', runtime => {
+    const webpackConfig = {
+        output: {
+            pathinfo: true
+        },
+        module: {
+            loaders: [
+                {
+                    include: [LIB, TEST],
+                    loader: 'babel',
+                    query: {cacheDirectory: true}
+                }
+            ]
+        },
+        devtool: '#inline-source-map'
+    };
+
+    return Promise.all([
+        read(`${ROOT}/node_modules/mocha/mocha.js`)
+            .then(write(`${BUILD}/test/mocha.js`, {overwrite: true})),
+
+        read(`${TEST}/runner/styles.less`)
+            .then(less())
+            .then(autoprefixer())
+            .then(write(`${BUILD}/test/styles.css`, {overwrite: true})),
+
+        read(`${TEST}/runner/index.html.jade`)
+            .then(jade({pkg: runtime.pkg}))
+            .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
+
+        read(`${TEST}/runner/scripts.js`)
+            .then(webpack(webpackConfig, {showStats: false}))
+            .then(write(`${BUILD}/test/scripts.js`, {overwrite: true}))
+    ]).then(() => console.log(`browse to ${BUILD}/test/index.html`));
+});
+
+ghu.task('build', ['build:scripts', 'build:copy', 'build:test']);
+
+ghu.task('zip', ['build'], runtime => {
     return read(`${BUILD}/*`)
         .then(jszip({dir: BUILD, level: 9}))
         .then(write(`${BUILD}/lo-${runtime.pkg.version}.zip`, {overwrite: true}));
 });
 
-ghu.task('build:stats', () => {
+ghu.task('release', ['clean', 'zip']);
+
+ghu.task('stats', () => {
     return run(`local/size.sh`, {stdio: 'inherit'});
 });
 
-ghu.task('build', ['build:zip', 'build:stats']);
-
-ghu.task('watch', runtime => {
-    return watch([LIB], () => ghu.run(['build'], runtime.args, true));
+ghu.task('watch', ['clean', 'build'], runtime => {
+    return watch([LIB, TEST], () => ghu.run(['build'], runtime.args, true));
 });

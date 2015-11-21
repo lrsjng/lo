@@ -1,7 +1,7 @@
 {
   "name": "lo",
   "displayName": "lo",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
@@ -12,10 +12,7 @@
     "url": "https://github.com/lrsjng/lo.git"
   },
   "scripts": {
-    "lint": "eslint lib",
-    "mocha": "mocha --compilers js:babel-core/register test/tests.js",
-    "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha -- --reporter dot",
-    "test": "npm run lint -s && npm run mocha -s"
+    "test": "eslint ."
   },
   "main": "./lib",
   "dependencies": {},
@@ -29,10 +26,9 @@
     "dateformat": "1.0.12",
     "eslint": "1.9.0",
     "ghu": "0.1.1",
-    "isparta": "4.0.0",
-    "lodash": "3.10.1",
+    "jquery": "2.1.4",
     "mocha": "2.3.4",
-    "sinon": "1.17.2",
+    "sinon": "git://github.com/cjohansen/Sinon.JS#b672042043517b9f84e14ed0fb8265126168778a",
     "webpack": "1.12.6"
   },
   "engines": {
