@@ -1,4 +1,4 @@
-/* lo v0.8.0 - © Lars Jung */
+/* lo v0.8.0 - https://larsjung.de/lo/ */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};

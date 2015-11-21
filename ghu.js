@@ -30,7 +30,7 @@ ghu.before(runtime => {
         }
     }
 
-    runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - © Lars Jung`;
+    runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
     runtime.commentJs = `/* ${runtime.comment} */\n`;
     runtime.commentHtml = `<!-- ${runtime.comment} -->`;
 
