@@ -2,7 +2,7 @@ const {resolve, join} = require('path');
 const dateformat = require('dateformat');
 const {
     default: ghu,
-    autoprefixer, hash, jade, jszip, less, mapfn, read, remove, run, uglify,
+    autoprefixer, jade, jszip, less, mapfn, read, remove, run, uglify,
     watch, webpack, wrap, write
 } = require('ghu');
 
@@ -17,8 +17,7 @@ ghu.defaults('release');
 
 ghu.before(runtime => {
     runtime.pkg = Object.assign({}, require('./package.json'));
-    runtime.stamp = dateformat(Date.now(), 'yyyy-mm-dd-HH-MM-ss');
-    runtime.hash = hash.string(runtime.stamp);
+    runtime.stamp = dateformat(Date.now(), 'yyyy-mm-dd HH:MM:ss');
 
     const res = run.sync(`git rev-list v${runtime.pkg.version}..HEAD`, {silent: true});
     if (res.code === 0) {
@@ -26,12 +25,12 @@ ghu.before(runtime => {
         if (hashes.length) {
             const counter = hashes.length;
             const githash = hashes[0].substr(0, 7);
-            runtime.pkg.version += `+${counter}~${githash}~${runtime.stamp}`;
+            runtime.pkg.version += `+${counter}~${githash}`;
         }
     }
 
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
-    runtime.commentJs = `/* ${runtime.comment} */\n`;
+    runtime.commentJs = `/*! ${runtime.comment} */\n`;
     runtime.commentHtml = `<!-- ${runtime.comment} -->`;
 
     console.log(runtime.comment);
@@ -47,7 +46,10 @@ ghu.task('lint', () => {
 
 ghu.task('build:scripts', runtime => {
     const webpackConfig = {
-        output: {},
+        output: {
+            library: 'lo',
+            libraryTarget: 'umd'
+        },
         module: {
             loaders: [
                 {
@@ -56,13 +58,9 @@ ghu.task('build:scripts', runtime => {
                     query: {cacheDirectory: true}
                 }
             ]
-        }
+        },
+        devtool: '#inline-source-map'
     };
-
-    if (!runtime.args.production) {
-        webpackConfig.output.pathinfo = true;
-        webpackConfig.devtool = '#inline-source-map';
-    }
 
     return read(`${LIB}/index.js`)
         .then(webpack(webpackConfig, {showStats: false}))
@@ -82,9 +80,6 @@ ghu.task('build:copy', () => {
 
 ghu.task('build:test', runtime => {
     const webpackConfig = {
-        output: {
-            pathinfo: true
-        },
         module: {
             loaders: [
                 {
@@ -101,19 +96,22 @@ ghu.task('build:test', runtime => {
         read(`${ROOT}/node_modules/mocha/mocha.js`)
             .then(write(`${BUILD}/test/mocha.js`, {overwrite: true})),
 
+        read(`${DIST}/lo.js`)
+            .then(write(`${BUILD}/test/lo.js`, {overwrite: true})),
+
         read(`${TEST}/runner/styles.less`)
             .then(less())
             .then(autoprefixer())
             .then(write(`${BUILD}/test/styles.css`, {overwrite: true})),
 
         read(`${TEST}/runner/index.html.jade`)
-            .then(jade({pkg: runtime.pkg}))
+            .then(jade(runtime))
             .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
 
-        read(`${TEST}/runner/scripts.js`)
+        read(`${TEST}/runner/tests.js`)
             .then(webpack(webpackConfig, {showStats: false}))
-            .then(write(`${BUILD}/test/scripts.js`, {overwrite: true}))
-    ]).then(() => console.log(`browse to ${BUILD}/test/index.html`));
+            .then(write(`${BUILD}/test/tests.js`, {overwrite: true}))
+    ]).then(() => console.log(`browse to file://${BUILD}/test/index.html`));
 });
 
 ghu.task('build', ['build:scripts', 'build:copy', 'build:test']);

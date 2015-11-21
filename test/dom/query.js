@@ -1,7 +1,10 @@
-const restoreHtml = window.restoreHtml;
+const win = global.window;
+const doc = global.document;
+const dom = global.lo.dom;
+const restoreHtml = global.restoreHtml;
+const Element = global.Element;
 const jquery = require('jquery');
 const assert = require('chai').assert;
-const dom = require('../..').dom;
 
 describe('dom() - query select', () => {
     const html =
@@ -24,17 +27,17 @@ describe('dom() - query select', () => {
     });
 
     it('dom(window)', () => {
-        const res = dom(window);
+        const res = dom(win);
         assert.instanceOf(res, dom);
         assert.lengthOf(res, 1);
-        assert.strictEqual(res[0], window);
+        assert.strictEqual(res[0], win);
     });
 
     it('dom(document)', () => {
-        const res = dom(window.document);
+        const res = dom(doc);
         assert.instanceOf(res, dom);
         assert.lengthOf(res, 1);
-        assert.strictEqual(res[0], window.document);
+        assert.strictEqual(res[0], doc);
     });
 
     [
@@ -66,7 +69,7 @@ describe('dom() - query select', () => {
             assert.instanceOf(res, dom);
             assert.strictEqual(res.length, jq.length);
             Array.from(res).forEach((el, idx) => {
-                assert.instanceOf(el, window.Element);
+                assert.instanceOf(el, Element);
                 assert.isNotNull(el.parentNode);
                 assert.strictEqual(el, jq[idx]);
             });

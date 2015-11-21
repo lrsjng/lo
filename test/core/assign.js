@@ -1,7 +1,7 @@
+const lo = global.lo;
 const insp = require('util').inspect;
 const isObject = require('util').isObject;
 const assert = require('chai').assert;
-const lo = require('../..');
 
 describe('.assign()', () => {
     it('is function', () => {

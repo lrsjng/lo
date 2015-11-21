@@ -1,7 +1,7 @@
+const lo = global.lo;
 const insp = require('util').inspect;
 const assert = require('chai').assert;
 const sinon = require('sinon');
-const lo = require('../..');
 
 describe('.map()', () => {
     it('is function', () => {

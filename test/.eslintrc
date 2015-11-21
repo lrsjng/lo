@@ -1,7 +1,6 @@
 ---
   env:
     mocha: true
-    browser: true
 
   rules:
     max-nested-callbacks: [1, 5]

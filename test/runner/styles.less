@@ -1,22 +1,22 @@
 @charset 'utf-8';
 
-@col-white: #ffffff;
-@col-red-500: #f44336;
-@col-red-800: #c62828;
-@col-amber-800: #ff8f00;
-@col-green-500: #4caf50;
-@col-grey-200: #eeeeee;
-@col-grey-800: #424242;
+@COL_WHITE: #ffffff;
+@COL_RED_500: #f44336;
+@COL_RED_800: #c62828;
+@COL_AMBER_800: #ff8f00;
+@COL_GREEN_500: #4caf50;
+@COL_GREY_200: #eeeeee;
+@COL_GREY_800: #424242;
 
-@col-text: @col-grey-800;
-@col-text-fail: @col-red-800;
-@col-back-hover: @col-grey-200;
-@col-pending: @col-grey-800;
-@col-pass: @col-green-500;
-@col-fail: @col-red-500;
-@col-medium: @col-amber-800;
-@col-slow: @col-red-800;
-@col-progress: rgba(255,255,255,0.2);
+@COL_TEXT: @COL_GREY_800;
+@COL_TEXT_FAIL: @COL_RED_800;
+@COL_BACK_HOVER: @COL_GREY_200;
+@COL_PENDING: @COL_GREY_800;
+@COL_PASS: @COL_GREEN_500;
+@COL_FAIL: @COL_RED_500;
+@COL_MEDIUM: @COL_AMBER_800;
+@COL_SLOW: @COL_RED_800;
+@COL_PROGRESS: rgba(255,255,255,0.2);
 
 #mocha {
     position: fixed;
@@ -26,7 +26,7 @@
     bottom: 0;
     z-index: 10000;
     font-family: 'Ubuntu', 'Roboto', 'Helvetica', 'Arial', 'sans-serif';
-    background: @col-white;
+    background: @COL_WHITE;
 
     #mocha-bar {
         position: absolute;
@@ -34,18 +34,20 @@
         top: 0;
         right: 0;
         height: 32px;
-        color: @col-white;
-        background: @col-pending;
+        color: @COL_WHITE;
+        background: @COL_PENDING;
         font-size: 14px;
         font-weight: bold;
         line-height: 32px;
         padding: 0 8px;
+        box-shadow: 0 0 4px @COL_TEXT;
+        text-shadow: 0 0 4px @COL_TEXT;
 
         &.pass {
-            background: @col-pass;
+            background: @COL_PASS;
         }
         &.fail {
-            background: @col-fail;
+            background: @COL_FAIL;
         }
         .stats {
             display: block;
@@ -60,7 +62,7 @@
             right: 0;
             top: 0;
             height: 100%;
-            background: @col-progress;
+            background: @COL_PROGRESS;
         }
     }
 
@@ -104,14 +106,14 @@
     }
 
     h1 {
-        color: @col-text;
+        color: @COL_TEXT;
         height: 24px;
         line-height: 24px;
         font-size: 16px;
         font-weight: bold;
 
         &:hover {
-            background: @col-back-hover;
+            background: @COL_BACK_HOVER;
         }
         a, a:active, a:visited, a:hover {
             padding: 0 8px;
@@ -120,11 +122,11 @@
             font-size: 0.85em;
         }
         .passed {
-            color: @col-pass;
+            color: @COL_PASS;
             margin-left: 1em;
         }
         .failed {
-            color: @col-fail;
+            color: @COL_FAIL;
             margin-left: 0.5em;
         }
     }
@@ -142,10 +144,10 @@
         margin: 4px 0 16px 18px;
         padding: 0 8px;
         word-wrap: break-word;
-        border-left: 2px solid @col-text;
+        border-left: 2px solid @COL_TEXT;
 
         &.error {
-            color: @col-text-fail;
+            color: @COL_TEXT_FAIL;
         }
     }
 
@@ -160,14 +162,14 @@
             width: 24px;
             height: 24px;
             line-height: 24px;
-            color: @col-text;
+            color: @COL_TEXT;
             font-size: 16px;
             font-weight: bold;
             text-align: center;
             cursor: pointer;
 
             &:hover {
-                background: @col-back-hover;
+                background: @COL_BACK_HOVER;
             }
         }
     }
@@ -178,10 +180,10 @@
         overflow: hidden;
 
         &:hover {
-            background: @col-back-hover;
+            background: @COL_BACK_HOVER;
         }
         &.fail {
-            color: @col-text-fail;
+            color: @COL_TEXT_FAIL;
         }
 
         &::before {
@@ -191,24 +193,24 @@
             height: 10px;
             float: left;
             margin-right: 8px;
-            background: @col-pending;
+            background: @COL_PENDING;
             border-radius: 20px;
             position: relative;
             top: 3px;
         }
         &.pass::before {
-            background: @col-pass;
+            background: @COL_PASS;
         }
         &.fail::before {
-            background: @col-fail;
+            background: @COL_FAIL;
         }
         &.pending::before {
-            background: @col-pending;
+            background: @COL_PENDING;
         }
 
         .duration {
             display: inline-block;
-            color: @col-text;
+            color: @COL_TEXT;
             border: none;
             box-shadow: none;
             font-size: 10px;
@@ -216,10 +218,10 @@
             float: right;
         }
         &.medium .duration {
-            color: @col-medium;
+            color: @COL_MEDIUM;
         }
         &.slow .duration {
-            color: @col-slow;
+            color: @COL_SLOW;
         }
     }
 

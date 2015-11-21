@@ -1,6 +1,6 @@
+const lo = global.lo;
 const insp = require('util').inspect;
 const assert = require('chai').assert;
-const lo = require('../..');
 
 describe('.hasLength()', () => {
     it('is function', () => {

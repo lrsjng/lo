@@ -1,7 +1,7 @@
-const restoreHtml = window.restoreHtml;
+const dom = global.lo.dom;
+const restoreHtml = global.restoreHtml;
 const jquery = require('jquery');
 const assert = require('chai').assert;
-const dom = require('../..').dom;
 
 describe('.attr()', () => {
     const html = '<x-block id="x-1" class="x-2" data-x="x-3"></x-block>';

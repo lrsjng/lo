@@ -1,10 +1,11 @@
+const WIN = global;
 const jquery = require('jquery');
 
 let showOnlyFailures = false;
 const template =
     '<div id="mocha">' +
         '<div id="mocha-bar">' +
-            '<a class="title" href="?">' + window.document.title + '</a>' +
+            '<a class="title" href="?">' + WIN.document.title + '</a>' +
             '<div class="stats"/>' +
             '<div class="progress"/>' +
         '</div>' +
@@ -14,7 +15,7 @@ const $mochaBar = $mocha.find('#mocha-bar');
 const $mochaStats = $mochaBar.find('.stats');
 const $mochaProgress = $mochaBar.find('.progress');
 
-function toggleFailureFilter(ev) {
+const toggleFailureFilter = ev => {
     ev.stopImmediatePropagation();
 
     showOnlyFailures = !showOnlyFailures;
@@ -24,10 +25,10 @@ function toggleFailureFilter(ev) {
     } else {
         jquery('.suite, .test').show();
     }
-}
+};
 
-function addSuiteStats() {
-    const $suite = jquery(this); // eslint-disable-line no-invalid-this
+const addSuiteStats = (idx, suiteEl) => {
+    const $suite = jquery(suiteEl);
 
     const tests = $suite.find('.test').length;
     const passed = $suite.find('.test.pass').length;
@@ -57,17 +58,16 @@ function addSuiteStats() {
     }
 
     $suite.addClass(tests === passed ? 'pass' : 'fail');
-    // $suite.append($toggle);
+    $suite.append($toggle);
     $header.append($count);
-}
+};
 
-function fixCodeFormatting() {
-    const $code = jquery(this); // eslint-disable-line no-invalid-this
+const fixCodeFormatting = (idx, codeEl) => {
+    const $code = jquery(codeEl);
     $code.text($code.text().trim().replace(/;\n\s*/g, ';\n'));
-}
+};
 
-function onEnd() {
-    const runner = this; // eslint-disable-line no-invalid-this, consistent-this
+const onEnd = runner => {
     const failed = runner.stats.failures > 0;
     const stats = (runner.stats.duration / 1000.0).toFixed(3) + 's';
 
@@ -80,11 +80,9 @@ function onEnd() {
     $mochaStats.text(stats);
     jquery('#mocha-report .suite').each(addSuiteStats);
     jquery('#mocha-report code').each(fixCodeFormatting);
-    // jquery('#mocha-report .test').hide();
-}
+};
 
-function onTest() {
-    const runner = this; // eslint-disable-line no-invalid-this, consistent-this
+const onTest = runner => {
     const percent = 100.0 * runner.stats.tests / runner.total;
     const stats = ((new Date().getTime() - runner.stats.start) / 1000.0).toFixed(3) + 's';
 
@@ -93,16 +91,18 @@ function onTest() {
     }
     $mochaProgress.css('width', 100 - percent + '%');
     $mochaStats.text(stats);
-}
+};
 
-function setupMocha() {
+const setupMocha = () => {
     $mocha.appendTo('body');
-    window.mocha.setup('bdd');
-}
+    WIN.mocha.setup('bdd');
+};
 
-function runMocha() {
-    window.mocha.run().on('test', onTest).on('end', onEnd);
-}
+const runMocha = () => {
+    const runner = WIN.mocha.run()
+        .on('test end', () => onTest(runner))
+        .on('end', () => onEnd(runner));
+};
 
 const pinner = (() => {
     let title;
@@ -113,7 +113,7 @@ const pinner = (() => {
     let $pinnedElements;
 
     function pin() {
-        title = window.document.title;
+        title = WIN.document.title;
         htmlId = jquery('html').attr('id');
         htmlClasses = jquery('html').attr('class');
         bodyId = jquery('body').attr('id');
@@ -122,21 +122,18 @@ const pinner = (() => {
     }
 
     function restore() {
-        window.document.title = title;
+        WIN.document.title = title;
         jquery('html').attr('id', htmlId).attr('class', htmlClasses);
         jquery('body').attr('id', bodyId).attr('class', bodyClasses);
         jquery('head,body').children().not($pinnedElements).remove();
-        if (window.localStorage && window.localStorage.clear) {
-            window.localStorage.clear();
-        }
     }
 
     return {pin, restore};
 })();
 
 const run = fn => {
-    window.pinHtml = pinner.pin;
-    window.restoreHtml = pinner.restore;
+    WIN.pinHtml = pinner.pin;
+    WIN.restoreHtml = pinner.restore;
     setupMocha();
     fn();
     pinner.pin();

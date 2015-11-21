@@ -1,5 +1,6 @@
+const dom = global.lo.dom;
+const Element = global.Element;
 const assert = require('chai').assert;
-const dom = require('../..').dom;
 
 describe('dom() - parse HTML', () => {
     [
@@ -113,7 +114,7 @@ describe('dom() - parse HTML', () => {
             const res = dom(tag);
             assert.instanceOf(res, dom);
             assert.lengthOf(res, 1);
-            assert.instanceOf(res[0], window.Element);
+            assert.instanceOf(res[0], Element);
             assert.strictEqual(res[0].nodeName.toLowerCase(), name.toLowerCase());
             assert.lengthOf(res[0].childNodes, 0);
             assert.isNull(res[0].parentNode);

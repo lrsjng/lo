@@ -1,5 +1,5 @@
+const dom = global.lo.dom;
 const assert = require('chai').assert;
-const dom = require('../..').dom;
 
 describe('dom()', () => {
     it('is function', () => {
