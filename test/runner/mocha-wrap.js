@@ -1,11 +1,10 @@
-const WIN = global;
 const jquery = require('jquery');
 
 let showOnlyFailures = false;
 const template =
     '<div id="mocha">' +
         '<div id="mocha-bar">' +
-            '<a class="title" href="?">' + WIN.document.title + '</a>' +
+            '<a class="title" href="?">' + global.document.title + '</a>' +
             '<div class="stats"/>' +
             '<div class="progress"/>' +
         '</div>' +
@@ -95,11 +94,11 @@ const onTest = runner => {
 
 const setupMocha = () => {
     $mocha.appendTo('body');
-    WIN.mocha.setup('bdd');
+    global.mocha.setup('bdd');
 };
 
 const runMocha = () => {
-    const runner = WIN.mocha.run()
+    const runner = global.mocha.run()
         .on('test end', () => onTest(runner))
         .on('end', () => onEnd(runner));
 };
@@ -113,7 +112,7 @@ const pinner = (() => {
     let $pinnedElements;
 
     function pin() {
-        title = WIN.document.title;
+        title = global.document.title;
         htmlId = jquery('html').attr('id');
         htmlClasses = jquery('html').attr('class');
         bodyId = jquery('body').attr('id');
@@ -122,7 +121,7 @@ const pinner = (() => {
     }
 
     function restore() {
-        WIN.document.title = title;
+        global.document.title = title;
         jquery('html').attr('id', htmlId).attr('class', htmlClasses);
         jquery('body').attr('id', bodyId).attr('class', bodyClasses);
         jquery('head,body').children().not($pinnedElements).remove();
@@ -132,8 +131,8 @@ const pinner = (() => {
 })();
 
 const run = fn => {
-    WIN.pinHtml = pinner.pin;
-    WIN.restoreHtml = pinner.restore;
+    global.pinHtml = pinner.pin;
+    global.restoreHtml = pinner.restore;
     setupMocha();
     fn();
     pinner.pin();
