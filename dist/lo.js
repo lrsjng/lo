@@ -1,4 +1,4 @@
-/*! lo v0.9.0 - https://larsjung.de/lo/ */
+/*! lo v0.10.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();

@@ -17,18 +17,7 @@ ghu.defaults('release');
 
 ghu.before(runtime => {
     runtime.pkg = Object.assign({}, require('./package.json'));
-    runtime.stamp = dateformat(Date.now(), 'yyyy-mm-dd HH:MM:ss');
-
-    const res = run.sync(`git rev-list v${runtime.pkg.version}..HEAD`, {silent: true});
-    if (res.code === 0) {
-        const hashes = res.stdout.split(/\r?\n/).filter(x => x);
-        if (hashes.length) {
-            const counter = hashes.length;
-            const githash = hashes[0].substr(0, 7);
-            runtime.pkg.version += `+${counter}~${githash}`;
-        }
-    }
-
+    runtime.stamp = dateformat(Date.now(), 'HH:MM:ss');
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
     runtime.commentJs = `/*! ${runtime.comment} */\n`;
     runtime.commentHtml = `<!-- ${runtime.comment} -->`;
