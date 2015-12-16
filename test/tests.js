@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 const {test} = require('scar');
 const {lo, pin} = require('./util');
 
