@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/lrsjng/lo.git"
   },
-  "main": "./dist/lo.js",
+  "main": "es5/lo.js",
   "ignore": [
     "*",
     "!dist/*",
