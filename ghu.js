@@ -1,23 +1,21 @@
 const {resolve, join} = require('path');
-const dateformat = require('dateformat');
 const {
     default: ghu,
-    autoprefixer, jade, jszip, less, mapfn, read, remove, run, uglify,
-    watch, webpack, wrap, write
+    jszip, mapfn, read, remove, run, uglify, watch, webpack, wrap, write
 } = require('ghu');
+
+const NAME = 'lo';
 
 const ROOT = resolve(__dirname);
 const LIB = join(ROOT, 'lib');
 const BUILD = join(ROOT, 'build');
 const TEST = join(ROOT, 'test');
-const DIST = join(ROOT, 'dist');
-const COVERAGE = join(ROOT, 'coverage');
+const DIST = join(ROOT, 'es5');
 
 ghu.defaults('release');
 
 ghu.before(runtime => {
     runtime.pkg = Object.assign({}, require('./package.json'));
-    runtime.stamp = dateformat(Date.now(), 'HH:MM:ss');
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
     runtime.commentJs = `/*! ${runtime.comment} */\n`;
     runtime.commentHtml = `<!-- ${runtime.comment} -->`;
@@ -26,7 +24,7 @@ ghu.before(runtime => {
 });
 
 ghu.task('clean', 'delete build folder', () => {
-    return remove(`${BUILD}, ${DIST}, ${COVERAGE}`);
+    return remove(`${BUILD}, ${DIST}`);
 });
 
 ghu.task('lint', () => {
@@ -36,7 +34,7 @@ ghu.task('lint', () => {
 ghu.task('build:scripts', runtime => {
     const webpackConfig = {
         output: {
-            library: 'lo',
+            library: NAME,
             libraryTarget: 'umd'
         },
         module: {
@@ -47,19 +45,18 @@ ghu.task('build:scripts', runtime => {
                     query: {cacheDirectory: true}
                 }
             ]
-        },
-        devtool: '#inline-source-map'
+        }
     };
 
     return read(`${LIB}/index.js`)
         .then(webpack(webpackConfig, {showStats: false}))
         .then(wrap(runtime.commentJs))
-        .then(write(`${DIST}/lo.js`, {overwrite: true}))
-        .then(write(`${BUILD}/lo-${runtime.pkg.version}.js`, {overwrite: true}))
+        .then(write(`${DIST}/${NAME}.js`, {overwrite: true}))
+        .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.js`, {overwrite: true}))
         .then(uglify({compressor: {warnings: false}}))
         .then(wrap(runtime.commentJs))
-        .then(write(`${DIST}/lo.min.js`, {overwrite: true}))
-        .then(write(`${BUILD}/lo-${runtime.pkg.version}.min.js`, {overwrite: true}));
+        .then(write(`${DIST}/${NAME}.min.js`, {overwrite: true}))
+        .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.min.js`, {overwrite: true}));
 });
 
 ghu.task('build:copy', () => {
@@ -75,40 +72,33 @@ ghu.task('build:test', runtime => {
                     include: [LIB, TEST],
                     loader: 'babel',
                     query: {cacheDirectory: true}
+                },
+                {
+                    include: [LIB],
+                    loader: 'isparta'
                 }
             ]
-        },
-        devtool: '#inline-source-map'
+        }
     };
 
     return Promise.all([
-        read(`${ROOT}/node_modules/mocha/mocha.js`)
-            .then(write(`${BUILD}/test/mocha.js`, {overwrite: true})),
-
-        read(`${DIST}/lo.js`)
-            .then(write(`${BUILD}/test/lo.js`, {overwrite: true})),
-
-        read(`${TEST}/runner/styles.less`)
-            .then(less())
-            .then(autoprefixer())
-            .then(write(`${BUILD}/test/styles.css`, {overwrite: true})),
-
-        read(`${TEST}/runner/index.html.jade`)
-            .then(jade(runtime))
-            .then(write(`${BUILD}/test/index.html`, {overwrite: true})),
-
-        read(`${TEST}/runner/tests.js`)
+        read(`${TEST}/tests.js`)
             .then(webpack(webpackConfig, {showStats: false}))
-            .then(write(`${BUILD}/test/tests.js`, {overwrite: true}))
+            .then(uglify({compressor: {warnings: false}}))
+            .then(wrap(runtime.commentJs))
+            .then(write(`${BUILD}/test/tests.js`, {overwrite: true})),
+
+        read(`${TEST}/tests.html`)
+            .then(write(`${BUILD}/test/tests.html`, {overwrite: true}))
     ]).then(() => console.log(`browse to file://${BUILD}/test/index.html`));
 });
 
 ghu.task('build', ['build:scripts', 'build:copy', 'build:test']);
 
 ghu.task('zip', ['build'], runtime => {
-    return read(`${BUILD}/*`)
+    return read(`${BUILD}/**/*`)
         .then(jszip({dir: BUILD, level: 9}))
-        .then(write(`${BUILD}/lo-${runtime.pkg.version}.zip`, {overwrite: true}));
+        .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.zip`, {overwrite: true}));
 });
 
 ghu.task('release', ['clean', 'zip']);
