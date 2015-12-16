@@ -13,7 +13,7 @@
   "main": "es5/lo.js",
   "ignore": [
     "*",
-    "!dist/*",
+    "!es5/*",
     "!*.md"
   ]
 }
