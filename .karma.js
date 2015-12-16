@@ -16,10 +16,11 @@ module.exports = config => {
     if (process.env.TRAVIS) { // eslint-disable-line no-process-env
         Object.assign(settings, {
             coverageReporter: {type: 'text'},
-            browsers: ['Firefox'],
+            browsers: ['Chrome_Travis', 'Firefox'],
             concurrency: 1,
             singleRun: true,
-            browserNoActivityTimeout: 30000
+            browserNoActivityTimeout: 30000,
+            customLaunchers: {Chrome_Travis: {base: 'Chrome', flags: ['--no-sandbox']}}
         });
     }
 
