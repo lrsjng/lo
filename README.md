@@ -1,6 +1,6 @@
 # lo
 
-[![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github] [![npm][npm-img]][npm] [![bower][bower-img]][github]  
+[![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github] [![npm][npm-img]][npm]  
 [![version][npm-v-img]][npm] [![downloads][npm-dm-img]][npm] [![dependencies status][gemnasium-img]][gemnasium] [![build status][travis-img]][travis]
 
 
@@ -44,6 +44,5 @@ THE SOFTWARE.
 
 [npm-v-img]: https://img.shields.io/npm/v/lo.svg?style=flat-square
 [npm-dm-img]: https://img.shields.io/npm/dm/lo.svg?style=flat-square
-[bower-img]: https://img.shields.io/badge/bower-lrsjng/lo-a0a060.svg?style=flat-square
 [gemnasium-img]: https://img.shields.io/gemnasium/lrsjng/lo.svg?style=flat-square
 [travis-img]: https://img.shields.io/travis/lrsjng/lo.svg?style=flat-square
