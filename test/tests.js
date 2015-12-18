@@ -1,5 +1,3 @@
-// require('babel-polyfill');
-
 const {test} = require('scar');
 const {lo, pin} = require('./util');
 
@@ -40,6 +38,7 @@ const karmaReporter = k => {
                 description: t.desc,
                 success: t.status === 'PASSED',
                 skipped: t.status === 'SKIPPED',
+                time: t.duration,
                 log: [String(t.err)]
             });
         }

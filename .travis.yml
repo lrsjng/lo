@@ -3,7 +3,8 @@ language: node_js
 sudo: true
 
 node_js:
-  - "node"
+  - node
+  - "5.3"
   - "5.2"
   - "5.1"
   - "5.0"
@@ -21,7 +22,7 @@ before_script:
   - sudo dpkg -i google-chrome*.deb
 
 addons:
-  firefox: "latest"
+  firefox: latest
 
 branches:
   only:
