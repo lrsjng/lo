@@ -101,7 +101,7 @@ ghu.task('zip', ['build'], runtime => {
 ghu.task('release', ['clean', 'zip']);
 
 ghu.task('stats', () => {
-    return run(`local/size.sh`, {stdio: 'inherit'});
+    return run('local/size.sh', {stdio: 'inherit'});
 });
 
 ghu.task('watch', ['clean', 'build'], runtime => {
