@@ -38,8 +38,11 @@ ghu.task('build:scripts', runtime => {
             loaders: [
                 {
                     include: [LIB],
-                    loader: 'babel',
-                    query: {cacheDirectory: true}
+                    loader: 'babel-loader',
+                    query: {
+                        cacheDirectory: true,
+                        presets: ['es2015']
+                    }
                 }
             ]
         }
@@ -67,12 +70,15 @@ ghu.task('build:test', runtime => {
             loaders: [
                 {
                     include: [LIB, TEST],
-                    loader: 'babel',
-                    query: {cacheDirectory: true}
+                    loader: 'babel-loader',
+                    query: {
+                        cacheDirectory: true,
+                        presets: ['es2015']
+                    }
                 },
                 {
                     include: [LIB],
-                    loader: 'isparta'
+                    loader: 'isparta-loader'
                 }
             ]
         }

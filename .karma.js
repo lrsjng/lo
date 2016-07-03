@@ -13,7 +13,7 @@ module.exports = config => {
         singleRun: true
     };
 
-    if (process.env.TRAVIS) { // eslint-disable-line no-process-env
+    if (process.env.TRAVIS) {
         Object.assign(settings, {
             coverageReporter: {type: 'text'},
             browsers: ['Chrome_Travis', 'Firefox'],

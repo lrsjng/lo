@@ -1,5 +1,4 @@
-const {test, assert, insp} = require('scar');
-const sinon = require('sinon');
+const {test, assert, insp, spy} = require('scar');
 const {lo} = require('../../util');
 
 test('lo.each is function', () => {
@@ -21,14 +20,12 @@ test('does not throw without callback', () => {
     [1, 2, 3]
 ].forEach(x => {
     test(`each(${insp(x)}, fn) works`, () => {
-        const spy = sinon.spy();
+        const fn = spy();
 
-        assert.equal(lo.each(x, spy), undefined);
-        assert.equal(spy.callCount, x.length);
+        assert.equal(lo.each(x, fn), undefined);
+        assert.equal(fn.calls.length, x.length);
         x.forEach((el, idx) => {
-            assert.equal(spy.args[idx][0], el);
-            assert.equal(spy.args[idx][1], idx);
-            assert.equal(spy.args[idx][2], x);
+            assert.deepEqual(fn.calls[idx].args, [el, idx, x]);
         });
     });
 });
@@ -38,15 +35,13 @@ test('does not throw without callback', () => {
     {a: 1}
 ].forEach(x => {
     test(`each(${insp(x)}, fn) works`, () => {
-        const spy = sinon.spy();
+        const fn = spy();
         let idx = 0;
 
-        assert.equal(lo.each(x, spy), undefined);
-        assert.equal(spy.callCount, Object.keys(x).length);
+        assert.equal(lo.each(x, fn), undefined);
+        assert.equal(fn.calls.length, Object.keys(x).length);
         Object.keys(x).forEach(key => {
-            assert.equal(spy.args[idx][0], x[key]);
-            assert.equal(spy.args[idx][1], key);
-            assert.equal(spy.args[idx][2], x);
+            assert.deepEqual(fn.calls[idx].args, [x[key], key, x]);
             idx += 1;
         });
     });

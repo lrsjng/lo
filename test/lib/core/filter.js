@@ -1,5 +1,4 @@
 const {test, assert, insp} = require('scar');
-const sinon = require('sinon');
 const {lo} = require('../../util');
 
 test('lo.filter is function', () => {
@@ -20,13 +19,11 @@ test('lo.filter([...]) does not throw', () => {
     [1, 1],
     [1, 2, 1]
 ].forEach(x => {
-    const alwaysTrue = sinon.stub().returns(true);
     test(`lo.filter(${insp(x)}, fn[always true]) === ${insp(x)}`, () => {
-        assert.deepEqual(lo.filter(x, alwaysTrue), x);
+        assert.deepEqual(lo.filter(x, () => true), x);
     });
 
-    const alwaysFalse = sinon.stub().returns(false);
     test(`lo.filter(${insp(x)}, fn[always false]) === ${insp([])}`, () => {
-        assert.deepEqual(lo.filter(x, alwaysFalse), []);
+        assert.deepEqual(lo.filter(x, () => false), []);
     });
 });
