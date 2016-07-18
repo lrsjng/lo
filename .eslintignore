@@ -1,6 +1,6 @@
 build
 coverage
-es5
+dist
 local
 node_modules
 **/vendor

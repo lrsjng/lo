@@ -15,7 +15,7 @@ test('lo.map is function', () => {
     {a: 1},
     {a: 11, b: 22, c: 33}
 ].forEach(x => {
-    const fn = spy(arg => arg);
+    const fn = spy(call => call.args[0]);
     test(`map(${insp(x)}, identity) works`, () => {
         let idx = 0;
         const res = lo.map(x, fn);
@@ -26,7 +26,7 @@ test('lo.map is function', () => {
                 key = parseInt(key, 10);
             }
             const val = x[key];
-            // assert.equal(fn.calls[idx].ctx, undefined);
+            assert.equal(fn.calls[idx].ctx, undefined);
             assert.deepEqual(fn.calls[idx].args, [val, key, x]);
             assert.equal(fn.calls[idx].ret, val);
             idx += 1;
@@ -48,6 +48,6 @@ test('lo.map() sets context correct', () => {
     lo.map([1, 2], fn, ctx);
     assert.equal(fn.calls.length, 2);
     fn.calls.forEach(call => {
-        // assert.equal(call.ctx, ctx);
+        assert.equal(call.ctx, ctx);
     });
 });

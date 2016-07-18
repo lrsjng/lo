@@ -1,7 +1,7 @@
 module.exports = config => {
     const settings = {
         basePath: 'build/test',
-        files: ['tests.js'],
+        files: ['index.js'],
         reporters: ['dots', 'coverage'],
         coverageReporter: {type: 'html', dir: 'coverage'},
         port: 9876,
