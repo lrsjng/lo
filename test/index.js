@@ -1,3 +1,7 @@
+if (!global.window) {
+    global.window = require('jsdom').jsdom().defaultView;
+}
+
 const {test} = require('scar');
 const {lo, pin} = require('./util');
 
@@ -16,7 +20,6 @@ require('./lib/core/isInstanceOf');
 require('./lib/core/isTypeOf');
 require('./lib/core/keys');
 require('./lib/core/map');
-require('./lib/core/pluck');
 require('./lib/core/size');
 require('./lib/core/uniq');
 require('./lib/core/values');
@@ -62,3 +65,5 @@ if (karma) {
 }
 
 global.window.lo = lo;
+
+console.log(global.window.document.documentElement.outerHTML);

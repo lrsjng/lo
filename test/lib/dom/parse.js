@@ -1,6 +1,7 @@
 const {test, assert} = require('scar');
 const {lo} = require('../../util');
-const Element = global.Element;
+
+const win = global.window;
 
 [
     'a',
@@ -95,9 +96,9 @@ const Element = global.Element;
     const tag = `<${name}>`;
     test(`lo.dom('${tag}') - create html`, () => {
         const res = lo.dom(tag);
-        assert.ok(res instanceof lo.dom);
+        assert.equal(typeof res, 'object');
         assert.equal(res.length, 1);
-        assert.ok(res[0] instanceof Element);
+        assert.ok(res[0] instanceof win.Element);
         assert.equal(res[0].nodeName.toLowerCase(), name.toLowerCase());
         assert.equal(res[0].childNodes.length, 0);
         assert.equal(res[0].parentNode, null);
@@ -116,6 +117,7 @@ const Element = global.Element;
     const tag = `<${name}>`;
     test(`lo.dom('${tag}') returns empty instance - create html`, () => {
         const res = lo.dom(tag);
+        assert.equal(typeof res, 'object');
         assert.equal(res.length, 0);
     });
 });

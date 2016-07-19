@@ -19,11 +19,12 @@ test('lo.assign is function', () => {
     [[undefined], {}],
     [[null], {}],
     [[0], {}],
-    [[undefined, {a: 1}, {a: 2}, {a: 3}], {a: 3}]
+    [[undefined, {a: 1}, {a: 2}, {a: 3}], {a: 3}],
+    [[{}, [11, 22], {x: 3}], {0: 11, 1: 22, x: 3}]
 ].forEach(x => {
     const [args, exp] = x;
 
-    test(`assign(${insp(args)}) === ${insp(exp)}`, () => {
+    test(`lo.assign(${insp(args)}) === ${insp(exp)}`, () => {
         const res = lo.assign(...args);
         assert.deepEqual(res, exp);
         if (args.length > 0 && isObject(args[0])) {

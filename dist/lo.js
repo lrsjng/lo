@@ -1,4 +1,4 @@
-/*! lo v0.22.0 - https://larsjung.de/lo/ */
+/*! lo v0.23.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -74,21 +74,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var OBJ_PROTO = Object.prototype;
 	var OBJ_GET_PROTO = Object.getPrototypeOf;
-
 	var ARR_PROTO = Array.prototype;
-	var ARR_INDEX_OF = ARR_PROTO.indexOf;
-
-	var ok = true;
 
 	var _apply = function _apply(fn, ctx, args) {
 	    return fn.apply(ctx, args);
 	}; // eslint-disable-line prefer-reflect
-	var _createTypeCheckFn = function _createTypeCheckFn(type) {
+	var _typeCheckFn = function _typeCheckFn(type) {
 	    return function (x) {
 	        return _apply(OBJ_PROTO.toString, x) === '[object ' + type + ']';
 	    };
 	};
-	var _is_obj = _createTypeCheckFn('Object');
+	var _is_obj = _typeCheckFn('Object');
 
 	var isObject = function isObject(x) {
 	    return x !== null && (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object';
@@ -97,14 +93,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _is_obj(x) && (OBJ_GET_PROTO(x) === OBJ_PROTO || OBJ_GET_PROTO(x) === null);
 	};
 	var isArray = Array.isArray;
-	var isArguments = _createTypeCheckFn('Arguments');
-	var isBoolean = _createTypeCheckFn('Boolean');
-	var isDate = _createTypeCheckFn('Date');
-	var isError = _createTypeCheckFn('Error');
-	var isFunction = _createTypeCheckFn('Function');
-	var isNumber = _createTypeCheckFn('Number');
-	var isRegExp = _createTypeCheckFn('RegExp');
-	var isString = _createTypeCheckFn('String');
+	var isArguments = _typeCheckFn('Arguments');
+	var isBoolean = _typeCheckFn('Boolean');
+	var isDate = _typeCheckFn('Date');
+	var isError = _typeCheckFn('Error');
+	var isFunction = _typeCheckFn('Function');
+	var isNumber = _typeCheckFn('Number');
+	var isRegExp = _typeCheckFn('RegExp');
+	var isString = _typeCheckFn('String');
 
 	var isNumeric = function isNumeric(x) {
 	    return isNumber(x) && isFinite(x);
@@ -139,25 +135,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return hasLength(x) ? x : values(x);
 	};
 	var toArray = function toArray(x) {
-	    return _apply(ARR_PROTO.slice, asArray(x));
+	    return isArray(x) ? x : hasLength(x) ? _apply(ARR_PROTO.slice, x) : values(x);
 	};
-
-	var forEach = function forEach(x, fn, ctx) {
-	    if (isFunction(fn)) {
-	        _apply(ARR_PROTO.forEach, x, [fn, ctx]);
-	    }
-	};
-
-	var forOwn = function forOwn(x, fn, ctx) {
-	    if (isFunction(fn)) {
-	        keys(x).forEach(function (key) {
-	            return _apply(fn, ctx, [x[key], key, x]);
-	        });
-	    }
-	};
-
-	var each = function each(x, fn, ctx) {
-	    return (hasLength(x) ? forEach : forOwn)(x, fn, ctx);
+	var asFunction = function asFunction(x) {
+	    return isFunction(x) ? x : function () {
+	        return x;
+	    };
 	};
 
 	var assign = function assign() {
@@ -165,67 +148,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	        exts[_key] = arguments[_key];
 	    }
 
-	    var target = exts.shift() || {};
+	    return Object.assign.apply(Object, [exts.shift() || {}].concat(exts));
+	};
 
-	    each(exts, function (ext) {
-	        each(ext, function (val, key) {
-	            target[key] = val;
-	        });
+	var forEach = function forEach(x, fn, ctx) {
+	    return _apply(ARR_PROTO.forEach, x, [fn, ctx]);
+	};
+	var forOwn = function forOwn(x, fn, ctx) {
+	    return keys(x).forEach(function (key) {
+	        return _apply(fn, ctx, [x[key], key, x]);
 	    });
-
-	    return target;
+	};
+	var each = function each(x, fn, ctx) {
+	    return (hasLength(x) ? forEach : forOwn)(x, fn, ctx);
 	};
 
-	var map = function map(x, fn, ctx) {
-	    var res = [];
-	    if (isFunction(fn)) {
-	        each(x, function (val, idx) {
-	            return res.push(_apply(fn, ctx, [val, idx, x]));
-	        });
-	    }
-	    return res;
+	var map = function map(x, fn) {
+	    return toArray(x).map(fn);
 	};
-
-	var filter = function filter(x, fn, ctx) {
-	    var res = [];
-	    if (isFunction(fn)) {
-	        each(x, function (val, idx) {
-	            if (_apply(fn, ctx, [val, idx])) {
-	                res.push(val);
-	            }
-	        });
-	    }
-	    return res;
+	var filter = function filter(x, fn) {
+	    return toArray(x).filter(fn);
 	};
-
+	var every = function every(x, fn) {
+	    return toArray(x).every(fn);
+	};
+	var some = function some(x, fn) {
+	    return toArray(x).some(fn);
+	};
 	var reduce = function reduce(x, fn, init) {
-	    return _apply(ARR_PROTO.reduce, asArray(x), [fn, init]);
-	};
-	var contains = function contains(x, el) {
-	    return _apply(ARR_INDEX_OF, asArray(x), [el]) >= 0;
+	    return toArray(x).reduce(fn, init);
 	};
 	var indexOf = function indexOf(x, el) {
-	    return _apply(ARR_INDEX_OF, hasLength(x) ? x : [], [el]);
+	    return toArray(x).indexOf(el);
+	};
+	var contains = function contains(x, el) {
+	    return indexOf(x, el) >= 0;
 	};
 	var compact = function compact(x) {
 	    return filter(x, function (val) {
 	        return !!val;
 	    });
 	};
-	var pluck = function pluck(x, prop) {
-	    return map(x, function (val) {
-	        return val[prop];
-	    });
-	};
+
 	var cmp = function cmp(a, b) {
 	    return a < b ? -1 : a > b ? 1 : 0;
 	};
-	var sortBy = function sortBy(list) {
-	    var selector = arguments.length <= 1 || arguments[1] === undefined ? function (x) {
-	        return x;
-	    } : arguments[1];
-	    return toArray(list).sort(function (a, b) {
-	        return cmp(selector(a), selector(b));
+	var sort = function sort(x, fn) {
+	    return toArray(x).sort(fn);
+	};
+	var sortBy = function sortBy(x, fn) {
+	    return sort(x, function (a, b) {
+	        return cmp(fn(a), fn(b));
 	    });
 	};
 
@@ -240,108 +213,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	};
 
-	var all = function all(x, fn) {
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	        for (var _iterator = asArray(x)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var xi = _step.value;
-
-	            if (!fn(xi)) {
-	                return false;
-	            }
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-
-	    return true;
-	};
-
-	var any = function any(x, fn) {
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-
-	    try {
-	        for (var _iterator2 = asArray(x)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var xi = _step2.value;
-
-	            if (fn(xi)) {
-	                return true;
-	            }
-	        }
-	    } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                _iterator2.return();
-	            }
-	        } finally {
-	            if (_didIteratorError2) {
-	                throw _iteratorError2;
-	            }
-	        }
-	    }
-
-	    return false;
-	};
-
 	module.exports = {
-	    ok: ok,
-	    isObject: isObject,
-	    isPlainObject: isPlainObject,
-	    isArray: isArray,
+	    asArray: asArray,
+	    asFunction: asFunction,
+	    assign: assign,
+	    cmp: cmp,
+	    compact: compact,
+	    contains: contains,
+	    each: each,
+	    every: every,
+	    filter: filter,
+	    forEach: forEach,
+	    forOwn: forOwn,
+	    has: has,
+	    hasLength: hasLength,
+	    indexOf: indexOf,
+	    is: is,
 	    isArguments: isArguments,
+	    isArray: isArray,
 	    isBoolean: isBoolean,
 	    isDate: isDate,
 	    isError: isError,
 	    isFunction: isFunction,
+	    isInstanceOf: isInstanceOf,
 	    isNumber: isNumber,
+	    isNumeric: isNumeric,
+	    isObject: isObject,
+	    isPlainObject: isPlainObject,
 	    isRegExp: isRegExp,
 	    isString: isString,
-	    isNumeric: isNumeric,
 	    isTypeOf: isTypeOf,
-	    isInstanceOf: isInstanceOf,
-	    is: is,
-	    has: has,
 	    keys: keys,
-	    values: values,
-	    hasLength: hasLength,
-	    size: size,
-	    asArray: asArray,
-	    toArray: toArray,
-	    forEach: forEach,
-	    forOwn: forOwn,
-	    each: each,
-	    assign: assign,
 	    map: map,
-	    filter: filter,
 	    reduce: reduce,
-	    contains: contains,
-	    indexOf: indexOf,
-	    compact: compact,
-	    pluck: pluck,
-	    cmp: cmp,
+	    size: size,
+	    some: some,
+	    sort: sort,
 	    sortBy: sortBy,
+	    toArray: toArray,
 	    uniq: uniq,
-	    all: all,
-	    any: any
+	    values: values
 	};
 
 /***/ },
@@ -356,8 +267,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _require = __webpack_require__(1);
 
-	var all = _require.all;
 	var _each = _require.each;
+	var every = _require.every;
 	var filter = _require.filter;
 	var forEach = _require.forEach;
 	var hasLength = _require.hasLength;
@@ -616,7 +527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.addCls.apply(this, arguments);
 	    },
 	    hasCls: function hasCls(name) {
-	        return all(this, function (el) {
+	        return every(this, function (el) {
 	            return el.classList.contains(name);
 	        });
 	    },

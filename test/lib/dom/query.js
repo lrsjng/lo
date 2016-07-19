@@ -3,8 +3,7 @@ const jquery = require('jquery');
 const {lo, restore} = require('../../util');
 
 const win = global.window;
-const doc = global.document;
-const Element = global.Element;
+const doc = win.document;
 
 const html =
     '<x-base>' +
@@ -18,14 +17,14 @@ const html =
 
 test('lo.dom(window) - query', () => {
     const res = lo.dom(win);
-    assert.ok(res instanceof lo.dom);
+    assert.equal(typeof res, 'object');
     assert.equal(res.length, 1);
     assert.equal(res[0], win);
 });
 
 test('lo.dom(document) - query', () => {
     const res = lo.dom(doc);
-    assert.ok(res instanceof lo.dom);
+    assert.equal(typeof res, 'object');
     assert.equal(res.length, 1);
     assert.equal(res[0], doc);
 });
@@ -59,11 +58,11 @@ test('lo.dom(document) - query', () => {
 
         const res = lo.dom(selector);
         const jq = jquery(selector);
-        assert.ok(res instanceof lo.dom);
+        assert.equal(typeof res, 'object');
         assert.equal(res.length, jq.length);
         Array.from(res).forEach((el, idx) => {
-            assert.ok(el instanceof Element);
-            assert.notEqual(el.parentNode, null);
+            assert.ok(el instanceof win.Element);
+            assert.ok(el.parentNode);
             assert.equal(el, jq[idx]);
         });
 

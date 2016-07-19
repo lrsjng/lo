@@ -1,22 +1,16 @@
 const {test, assert} = require('scar');
 const {lo} = require('../util');
 
-test('window is the global object', () => {
-    assert.ok(global);
+test('window is global object', () => {
     assert.ok(global.window);
-    assert.equal(global, global.window);
-    assert.ok(global.document);
+    assert.equal(global.window, global.window.window);
 });
 
 test('lo is global object', () => {
-    assert.equal(typeof lo, 'object');
+    assert.ok(global.window.lo);
 });
 
-test('works in this environment (lo.ok is true)', () => {
-    assert.equal(lo.ok, true);
-});
-
-test('has the right properties', () => {
+test('lo has the right properties', () => {
     // debounce
     // difference
     // intersection
@@ -24,9 +18,8 @@ test('has the right properties', () => {
     // trim
 
     assert.deepEqual(Object.keys(lo).sort(), [
-        'all',
-        'any',
         'asArray',
+        'asFunction',
         'assign',
         'binder',
         'cmp',
@@ -34,6 +27,7 @@ test('has the right properties', () => {
         'contains',
         'dom',
         'each',
+        'every',
         'filter',
         'forEach',
         'forOwn',
@@ -61,14 +55,14 @@ test('has the right properties', () => {
         'isWindow',
         'keys',
         'map',
-        'ok',
         'onPrint',
         'onReady',
         'onResize',
-        'pluck',
         'reduce',
         'size',
+        'some',
         'sortBy',
+        'sort',
         'toArray',
         'uniq',
         'values'

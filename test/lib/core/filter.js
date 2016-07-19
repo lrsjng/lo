@@ -5,12 +5,12 @@ test('lo.filter is function', () => {
     assert.equal(typeof lo.filter, 'function');
 });
 
-test('lo.filter() does not throw', () => {
-    assert.deepEqual(lo.filter(), []);
+test('lo.filter() throws without callback', () => {
+    assert.throws(() => lo.filter(), /TypeError/);
 });
 
-test('lo.filter([...]) does not throw', () => {
-    assert.deepEqual(lo.filter([1, 2]), []);
+test('lo.filter([1, 2]) throws without callback', () => {
+    assert.throws(() => lo.filter([1, 2]), /TypeError/);
 });
 
 [

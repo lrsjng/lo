@@ -79,6 +79,10 @@ ghu.task('build:test', runtime => {
                 {
                     include: [LIB],
                     loader: 'isparta-loader'
+                },
+                {
+                    test: /jsdom/,
+                    loader: 'null-loader'
                 }
             ]
         }
@@ -87,7 +91,7 @@ ghu.task('build:test', runtime => {
     return Promise.all([
         read(`${TEST}/index.js`)
             .then(webpack(webpackConfig, {showStats: false}))
-            .then(uglify({compressor: {warnings: false}}))
+            // .then(uglify({compressor: {warnings: false}}))
             .then(wrap(runtime.commentJs))
             .then(write(`${BUILD}/test/index.js`, {overwrite: true})),
 

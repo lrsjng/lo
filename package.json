@@ -1,6 +1,6 @@
 {
   "name": "lo",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
@@ -12,7 +12,9 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "node ghu build:test && karma start .karma.js",
+    "test": "node test",
+    "karma": "node test && node ghu build:test && karma start .karma.js",
+    "cover": "isparta cover --dir coverage --report text --report html test",
     "check": "npm run -s lint && npm run -s test",
     "build": "node ghu release",
     "precommit": "npm run -s check && npm run -s build"
@@ -24,13 +26,16 @@
     "babel-preset-es2015": "6.9.0",
     "eslint": "3.1.1",
     "ghu": "0.7.0",
+    "isparta": "4.0.0",
     "isparta-loader": "2.0.0",
     "jquery": "3.1.0",
+    "jsdom": "9.4.1",
     "karma": "1.1.1",
     "karma-chrome-launcher": "1.0.1",
     "karma-coverage": "1.1.0",
     "karma-firefox-launcher": "1.0.0",
     "karma-opera-launcher": "1.0.0",
+    "null-loader": "0.1.1",
     "scar": "0.13.0"
   },
   "engines": {

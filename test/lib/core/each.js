@@ -5,12 +5,12 @@ test('lo.each is function', () => {
     assert.equal(typeof lo.each, 'function');
 });
 
-test('does not throw without arguments', () => {
+test('lo.each() returns undefined', () => {
     assert.equal(lo.each(), undefined);
 });
 
-test('does not throw without callback', () => {
-    assert.equal(lo.each([1, 2]), undefined);
+test('lo.each([1, 2]) throws without callback', () => {
+    assert.throws(() => lo.each([1, 2]), /TypeError/);
 });
 
 [
@@ -19,7 +19,7 @@ test('does not throw without callback', () => {
     [undefined],
     [1, 2, 3]
 ].forEach(x => {
-    test(`each(${insp(x)}, fn) works`, () => {
+    test(`lo.each(${insp(x)}, fn) works`, () => {
         const fn = spy();
 
         assert.equal(lo.each(x, fn), undefined);
@@ -34,7 +34,7 @@ test('does not throw without callback', () => {
     {},
     {a: 1}
 ].forEach(x => {
-    test(`each(${insp(x)}, fn) works`, () => {
+    test(`lo.each(${insp(x)}, fn) works`, () => {
         const fn = spy();
         let idx = 0;
 
