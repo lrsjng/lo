@@ -14,13 +14,10 @@ test('lo has the right properties', () => {
     // debounce
     // difference
     // intersection
-    // sortBy
-    // trim
 
     assert.deepEqual(Object.keys(lo).sort(), [
         'asArray',
         'asFunction',
-        'assign',
         'binder',
         'cmp',
         'compact',

@@ -1,4 +1,4 @@
-/*! lo v0.23.0 - https://larsjung.de/lo/ */
+/*! lo v0.24.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -57,12 +57,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _require = __webpack_require__(1);
-
-	var assign = _require.assign;
-
-
-	module.exports = assign({}, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3));
+	module.exports = Object.assign({}, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3));
 
 /***/ },
 /* 1 */
@@ -143,14 +138,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 
-	var assign = function assign() {
-	    for (var _len = arguments.length, exts = Array(_len), _key = 0; _key < _len; _key++) {
-	        exts[_key] = arguments[_key];
-	    }
-
-	    return Object.assign.apply(Object, [exts.shift() || {}].concat(exts));
-	};
-
 	var forEach = function forEach(x, fn, ctx) {
 	    return _apply(ARR_PROTO.forEach, x, [fn, ctx]);
 	};
@@ -216,7 +203,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = {
 	    asArray: asArray,
 	    asFunction: asFunction,
-	    assign: assign,
 	    cmp: cmp,
 	    compact: compact,
 	    contains: contains,
@@ -621,7 +607,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _require = __webpack_require__(1);
 
-	var assign = _require.assign;
 	var contains = _require.contains;
 	var each = _require.each;
 	var isFunction = _require.isFunction;
@@ -745,7 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return inst;
 	};
 
-	assign(binder.prototype, {
+	binder.prototype = {
 	    constructor: binder,
 
 	    log: function log() {
@@ -823,7 +808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	        return this;
 	    }
-	});
+	};
 
 	module.exports = {
 	    binder: binder

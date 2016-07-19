@@ -3,7 +3,6 @@ const jquery = require('jquery');
 const {lo, restore} = require('../../util');
 
 const win = global.window;
-const doc = win.document;
 
 const html =
     '<x-base>' +
@@ -23,10 +22,10 @@ test('lo.dom(window) - query', () => {
 });
 
 test('lo.dom(document) - query', () => {
-    const res = lo.dom(doc);
+    const res = lo.dom(win.document);
     assert.equal(typeof res, 'object');
     assert.equal(res.length, 1);
-    assert.equal(res[0], doc);
+    assert.equal(res[0], win.document);
 });
 
 [

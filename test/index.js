@@ -8,7 +8,6 @@ const {lo, pin} = require('./util');
 pin();
 
 require('./lib/lo');
-require('./lib/core/assign');
 require('./lib/core/compact');
 require('./lib/core/contains');
 require('./lib/core/each');
@@ -65,5 +64,3 @@ if (karma) {
 }
 
 global.window.lo = lo;
-
-console.log(global.window.document.documentElement.outerHTML);
