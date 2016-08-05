@@ -26,6 +26,7 @@ require('./lib/dom/dom');
 require('./lib/dom/parse');
 require('./lib/dom/query');
 require('./lib/dom/attr');
+require('./lib/dom/find');
 
 const karma = global.window.__karma__;
 

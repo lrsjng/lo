@@ -1,4 +1,4 @@
-/*! lo v0.24.0 - https://larsjung.de/lo/ */
+/*! lo v0.25.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -403,9 +403,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    find: function find(selector) {
 	        var _ref;
 
-	        return (_ref = []).concat.apply(_ref, _toConsumableArray(this.map(function (el) {
+	        return dom((_ref = []).concat.apply(_ref, _toConsumableArray(this.map(function (el) {
 	            return queryAll(selector, el);
-	        })));
+	        }))));
 	    },
 	    on: function on(type, fn) {
 	        return this.each(function (el) {

@@ -97,6 +97,7 @@ test('lo.dom() - create element', () => {
         const res = lo.dom(tag);
         assert.ok(res, msg);
         assert.equal(typeof res, 'object', msg);
+        assert.equal(res.constructor, lo.dom, msg);
         assert.equal(res.length, 1, msg);
         assert.ok(res[0] instanceof global.window.Element, msg);
         assert.equal(res[0].nodeName.toLowerCase(), name.toLowerCase(), msg);
@@ -118,6 +119,7 @@ test('lo.dom() - create element', () => {
         const res = lo.dom(tag);
         assert.ok(res, msg);
         assert.equal(typeof res, 'object', msg);
+        assert.equal(res.constructor, lo.dom, msg);
         assert.equal(res.length, 0, msg);
     });
 });

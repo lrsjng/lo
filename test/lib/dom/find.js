@@ -14,23 +14,7 @@ const html =
         '<x-block id="x-6" class="x-b" data-x="x-d"></x-block>' +
     '</x-base>';
 
-test('lo.dom() - query', () => {
-    (() => {
-        const res = lo.dom(win);
-        assert.equal(typeof res, 'object');
-        assert.equal(res.constructor, lo.dom);
-        assert.equal(res.length, 1);
-        assert.equal(res[0], win);
-    })();
-
-    (() => {
-        const res = lo.dom(win.document);
-        assert.equal(typeof res, 'object');
-        assert.equal(res.constructor, lo.dom);
-        assert.equal(res.length, 1);
-        assert.equal(res[0], win.document);
-    })();
-
+test('lo.dom().find()', () => {
     [
         'x-base',
         'x-block',
@@ -58,8 +42,8 @@ test('lo.dom() - query', () => {
         restore();
         jquery(html).appendTo('body');
 
-        const res = lo.dom(selector);
-        const jq = jquery(selector);
+        const res = lo.dom('body').find(selector);
+        const jq = jquery('body').find(selector);
         assert.equal(typeof res, 'object', msg);
         assert.equal(res.constructor, lo.dom, msg);
         assert.equal(res.length, jq.length, msg);
