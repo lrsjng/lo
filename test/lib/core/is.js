@@ -78,86 +78,86 @@ const FIXTURES = [
     ...FIX_ERROR
 ];
 
-FIXTURES.forEach(x => {
-    const exp = FIX_BOOLEAN.indexOf(x) >= 0;
-    test(`lo.isBoolean(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isBoolean(x), exp);
+test('lo.isBoolean()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_BOOLEAN.indexOf(x) >= 0;
+        assert.equal(lo.isBoolean(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_NUMBER.indexOf(x) >= 0 || Number.isNaN(x);
-    test(`lo.isNumber(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isNumber(x), exp);
+test('lo.isNumber()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_NUMBER.indexOf(x) >= 0 || Number.isNaN(x);
+        assert.equal(lo.isNumber(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_NUMERIC.indexOf(x) >= 0;
-    test(`lo.isNumeric(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isNumeric(x), exp);
+test('lo.isNumeric()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_NUMERIC.indexOf(x) >= 0;
+        assert.equal(lo.isNumeric(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_STRING.indexOf(x) >= 0;
-    test(`lo.isString(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isString(x), exp);
+test('lo.isString()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_STRING.indexOf(x) >= 0;
+        assert.equal(lo.isString(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_ARRAY.indexOf(x) >= 0;
-    test(`lo.isArray(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isArray(x), exp);
+test('lo.isArray()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_ARRAY.indexOf(x) >= 0;
+        assert.equal(lo.isArray(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_REGEXP.indexOf(x) >= 0;
-    test(`lo.isRegExp(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isRegExp(x), exp);
+test('lo.isRegExp()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_REGEXP.indexOf(x) >= 0;
+        assert.equal(lo.isRegExp(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_FUNCTION.indexOf(x) >= 0;
-    test(`lo.isFunction(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isFunction(x), exp);
+test('lo.isFunction()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_FUNCTION.indexOf(x) >= 0;
+        assert.equal(lo.isFunction(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_PLAIN_OBJECT.indexOf(x) >= 0;
-    test(`lo.isPlainObject(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isPlainObject(x), exp);
+test('lo.isPlainObject()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_PLAIN_OBJECT.indexOf(x) >= 0;
+        assert.equal(lo.isPlainObject(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = x !== null && typeof x === 'object'; // :(
-    test(`lo.isObject(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isObject(x), exp);
+test('lo.isObject()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = x !== null && typeof x === 'object'; // :(
+        assert.equal(lo.isObject(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_ARGUMENTS.indexOf(x) >= 0;
-    test(`lo.isArguments(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isArguments(x), exp);
+test('lo.isArguments()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_ARGUMENTS.indexOf(x) >= 0;
+        assert.equal(lo.isArguments(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_ERROR.indexOf(x) >= 0;
-    test(`lo.isError(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isError(x), exp);
+test('lo.isError()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_ERROR.indexOf(x) >= 0;
+        assert.equal(lo.isError(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-FIXTURES.forEach(x => {
-    const exp = FIX_DATE.indexOf(x) >= 0;
-    test(`lo.isDate(${insp(x)}) === ${insp(exp)}`, () => {
-        assert.equal(lo.isDate(x), exp);
+test('lo.isDate()', () => {
+    FIXTURES.forEach((x, idx) => {
+        const exp = FIX_DATE.indexOf(x) >= 0;
+        assert.equal(lo.isDate(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });

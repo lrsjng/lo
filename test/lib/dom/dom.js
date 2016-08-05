@@ -1,11 +1,9 @@
 const {test, assert} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.dom is function', () => {
-    assert.equal(typeof lo.dom, 'function');
-});
+test('lo.dom()', () => {
+    assert.equal(typeof lo.dom, 'function', 'is function');
 
-test('lo.dom.prototype has the right properties', () => {
     assert.deepEqual(Object.keys(lo.dom.prototype).sort(), [
         'constructor',
         'each',
@@ -29,5 +27,5 @@ test('lo.dom.prototype has the right properties', () => {
         'hasCls',
         'addCls',
         'rmCls'
-    ].sort());
+    ].sort(), 'props');
 });

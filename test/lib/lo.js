@@ -1,16 +1,14 @@
 const {test, assert} = require('scar');
 const {lo} = require('../util');
 
-test('window is global object', () => {
+test('window', () => {
     assert.ok(global.window);
     assert.equal(global.window, global.window.window);
 });
 
-test('lo is global object', () => {
+test('lo', () => {
     assert.ok(global.window.lo);
-});
 
-test('lo has the right properties', () => {
     // debounce
     // difference
     // intersection
