@@ -632,9 +632,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isName = function isName(x) {
 	    return isString(x) && RE_NAME.test(x);
 	};
-
 	var defineConst = function defineConst(inst, name, value) {
-	    defineProperty(inst, name, { value: value });
+	    return defineProperty(inst, name, { value: value });
 	};
 
 	var updateEls = function updateEls(inst, name, els) {
