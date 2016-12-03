@@ -1,4 +1,4 @@
-/*! lo v0.25.0 - https://larsjung.de/lo/ */
+/*! lo v0.26.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -65,7 +65,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var OBJ_PROTO = Object.prototype;
 	var OBJ_GET_PROTO = Object.getPrototypeOf;
@@ -251,19 +251,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var _require = __webpack_require__(1);
-
-	var _each = _require.each;
-	var every = _require.every;
-	var filter = _require.filter;
-	var forEach = _require.forEach;
-	var hasLength = _require.hasLength;
-	var is = _require.is;
-	var isInstanceOf = _require.isInstanceOf;
-	var isString = _require.isString;
-	var _map = _require.map;
-	var toArray = _require.toArray;
-
+	var _require = __webpack_require__(1),
+	    _each = _require.each,
+	    every = _require.every,
+	    filter = _require.filter,
+	    forEach = _require.forEach,
+	    hasLength = _require.hasLength,
+	    is = _require.is,
+	    isInstanceOf = _require.isInstanceOf,
+	    isString = _require.isString,
+	    _map = _require.map,
+	    toArray = _require.toArray;
 
 	var WIN = global.window;
 	var DOC = WIN.document;
@@ -282,10 +280,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        try {
 	            for (var _iterator = rules[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                var _step$value = _slicedToArray(_step.value, 2);
-
-	                var re = _step$value[0];
-	                var el = _step$value[1];
+	                var _step$value = _slicedToArray(_step.value, 2),
+	                    re = _step$value[0],
+	                    el = _step$value[1];
 
 	                if (re.test(str)) {
 	                    return el;
@@ -605,15 +602,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var _require = __webpack_require__(1);
-
-	var contains = _require.contains;
-	var each = _require.each;
-	var isFunction = _require.isFunction;
-	var isString = _require.isString;
-	var map = _require.map;
-	var toArray = _require.toArray;
-
+	var _require = __webpack_require__(1),
+	    contains = _require.contains,
+	    each = _require.each,
+	    isFunction = _require.isFunction,
+	    isString = _require.isString,
+	    map = _require.map,
+	    toArray = _require.toArray;
 
 	var WIN = global.window;
 	var INPUT_ELS = ['input', 'select', 'textarea'];
@@ -622,7 +617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ATTR_KEY = 'data-tpl';
 
 	var createObj = function createObj() {
-	    var proto = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	    var proto = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 	    return Object.create(proto);
 	};
 	var defineProperty = Object.defineProperty;

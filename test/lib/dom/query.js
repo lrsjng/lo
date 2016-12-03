@@ -20,7 +20,9 @@ test('lo.dom() - query', () => {
         assert.equal(typeof res, 'object');
         assert.equal(res.constructor, lo.dom);
         assert.equal(res.length, 1);
-        assert.equal(res[0], win);
+        // !!! call stack exceeded when asserting window
+        // assert.equal(res[0], win);
+        assert.ok(res[0] === win);
     })();
 
     (() => {
