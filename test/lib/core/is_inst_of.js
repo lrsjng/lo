@@ -1,8 +1,8 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.isInstanceOf()', () => {
-    assert.equal(typeof lo.isInstanceOf, 'function', 'is function');
+test('lo.is_inst_of()', () => {
+    assert.equal(typeof lo.is_inst_of, 'function', 'is function');
 
     [
         [{}, Object],
@@ -12,7 +12,7 @@ test('lo.isInstanceOf()', () => {
         [new Number(), Number], // eslint-disable-line no-new-wrappers
         [new String(), String] // eslint-disable-line no-new-wrappers
     ].forEach(([arg, typ], idx) => {
-        assert.equal(lo.isInstanceOf(arg, typ), true, `fix#${idx}: (${insp(arg)}, ${insp(typ)}) -> true`);
+        assert.equal(lo.is_inst_of(arg, typ), true, `fix#${idx}: (${insp(arg)}, ${insp(typ)}) -> true`);
     });
 
     [
@@ -22,6 +22,6 @@ test('lo.isInstanceOf()', () => {
         [1, Number],
         ['', String]
     ].forEach(([arg, typ], idx) => {
-        assert.equal(lo.isInstanceOf(arg, typ), false, `fix#${idx}: (${insp(arg)}, ${insp(typ)}) -> false`);
+        assert.equal(lo.is_inst_of(arg, typ), false, `fix#${idx}: (${insp(arg)}, ${insp(typ)}) -> false`);
     });
 });

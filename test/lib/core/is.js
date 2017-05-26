@@ -78,86 +78,86 @@ const FIXTURES = [
     ...FIX_ERROR
 ];
 
-test('lo.isBoolean()', () => {
+test('lo.is_bool()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_BOOLEAN.indexOf(x) >= 0;
-        assert.equal(lo.isBoolean(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_bool(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isNumber()', () => {
+test('lo.is_num()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_NUMBER.indexOf(x) >= 0 || Number.isNaN(x);
-        assert.equal(lo.isNumber(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_num(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isNumeric()', () => {
+test('lo.is_numeric()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_NUMERIC.indexOf(x) >= 0;
-        assert.equal(lo.isNumeric(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_numeric(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isString()', () => {
+test('lo.is_str()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_STRING.indexOf(x) >= 0;
-        assert.equal(lo.isString(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_str(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isArray()', () => {
+test('lo.is_arr()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_ARRAY.indexOf(x) >= 0;
-        assert.equal(lo.isArray(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_arr(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isRegExp()', () => {
+test('lo.is_re()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_REGEXP.indexOf(x) >= 0;
-        assert.equal(lo.isRegExp(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_re(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isFunction()', () => {
+test('lo.is_fn()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_FUNCTION.indexOf(x) >= 0;
-        assert.equal(lo.isFunction(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_fn(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isPlainObject()', () => {
+test('lo.is_plain_obj()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_PLAIN_OBJECT.indexOf(x) >= 0;
-        assert.equal(lo.isPlainObject(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_plain_obj(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isObject()', () => {
+test('lo.is_obj()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = x !== null && typeof x === 'object'; // :(
-        assert.equal(lo.isObject(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_obj(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isArguments()', () => {
+test('lo.is_args()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_ARGUMENTS.indexOf(x) >= 0;
-        assert.equal(lo.isArguments(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_args(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isError()', () => {
+test('lo.is_err()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_ERROR.indexOf(x) >= 0;
-        assert.equal(lo.isError(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_err(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });
 
-test('lo.isDate()', () => {
+test('lo.is_date()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_DATE.indexOf(x) >= 0;
-        assert.equal(lo.isDate(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
+        assert.equal(lo.is_date(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });

@@ -1,8 +1,8 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.hasLength()', () => {
-    assert.equal(typeof lo.hasLength, 'function', 'is function');
+test('lo.has_len()', () => {
+    assert.equal(typeof lo.has_len, 'function', 'is function');
 
     [
         [],
@@ -11,7 +11,7 @@ test('lo.hasLength()', () => {
         '',
         'abc'
     ].forEach((x, idx) => {
-        assert.equal(lo.hasLength(x), true, `fix#1.${idx}: (${insp(x)}) -> true`);
+        assert.equal(lo.has_len(x), true, `fix#1.${idx}: (${insp(x)}) -> true`);
     });
 
     [
@@ -26,6 +26,6 @@ test('lo.hasLength()', () => {
         new Object(), // eslint-disable-line no-new-object
         /./
     ].forEach((x, idx) => {
-        assert.equal(lo.hasLength(x), false, `fix#1.${idx}: (${insp(x)}) -> false`);
+        assert.equal(lo.has_len(x), false, `fix#1.${idx}: (${insp(x)}) -> false`);
     });
 });

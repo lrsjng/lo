@@ -1,8 +1,8 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.contains()', () => {
-    assert.equal(typeof lo.contains, 'function', 'is function');
+test('lo.includes()', () => {
+    assert.equal(typeof lo.includes, 'function', 'is function');
 
     [
         [[undefined], undefined],
@@ -15,8 +15,8 @@ test('lo.contains()', () => {
         ['a', 'a'],
         [{a: 1}, 1]
     ].forEach(([arr, val], idx) => {
-        test(`lo.contains(${insp(arr)}, ${insp(val)}) === true`, () => {
-            assert.equal(lo.contains(arr, val), true, `fix#${idx}: (${insp(arr)}, ${insp(val)}) -> true`);
+        test(`lo.includes(${insp(arr)}, ${insp(val)}) === true`, () => {
+            assert.equal(lo.includes(arr, val), true, `fix#${idx}: (${insp(arr)}, ${insp(val)}) -> true`);
         });
     });
 
@@ -40,6 +40,6 @@ test('lo.contains()', () => {
         [{}, null],
         [{a: 1}, 0]
     ].forEach(([arr, val], idx) => {
-        assert.equal(lo.contains(arr, val), false, `fix#${idx}: (${insp(arr)}, ${insp(val)}) -> false`);
+        assert.equal(lo.includes(arr, val), false, `fix#${idx}: (${insp(arr)}, ${insp(val)}) -> false`);
     });
 });

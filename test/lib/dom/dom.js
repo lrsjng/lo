@@ -12,7 +12,7 @@ test('lo.dom()', () => {
         'on',
         'off',
         'attr',
-        'rmAttr',
+        'rm_attr',
         'val',
         'html',
         'text',
@@ -20,12 +20,12 @@ test('lo.dom()', () => {
         'rm',
         'rpl',
         'app',
-        'appTo',
+        'app_to',
         'pre',
-        'preTo',
+        'pre_to',
         'cls',
-        'hasCls',
-        'addCls',
-        'rmCls'
+        'has_cls',
+        'add_cls',
+        'rm_cls'
     ].sort(), 'props');
 });

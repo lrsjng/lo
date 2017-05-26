@@ -1,8 +1,8 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.isTypeOf()', () => {
-    assert.equal(typeof lo.isTypeOf, 'function', 'is function');
+test('lo.is_type_of()', () => {
+    assert.equal(typeof lo.is_type_of, 'function', 'is function');
 
     [
         [null, 'object'],
@@ -17,7 +17,7 @@ test('lo.isTypeOf()', () => {
         [/./, 'object'],
         [new Date(), 'object']
     ].forEach(([arg, typ], idx) => {
-        assert.equal(lo.isTypeOf(arg, typ), true, `fix#1.${idx}: (${insp(arg)}, ${insp(typ)}) -> true`);
+        assert.equal(lo.is_type_of(arg, typ), true, `fix#1.${idx}: (${insp(arg)}, ${insp(typ)}) -> true`);
     });
 
     [
@@ -35,6 +35,6 @@ test('lo.isTypeOf()', () => {
         [/./, undefined],
         [new Date(), undefined]
     ].forEach(([arg, typ], idx) => {
-        assert.equal(lo.isTypeOf(arg, typ), false, `fix#2.${idx}: (${insp(arg)}, ${insp(typ)}) -> false`);
+        assert.equal(lo.is_type_of(arg, typ), false, `fix#2.${idx}: (${insp(arg)}, ${insp(typ)}) -> false`);
     });
 });

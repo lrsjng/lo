@@ -9,24 +9,24 @@ pin();
 
 require('./lib/lo');
 require('./lib/core/compact');
-require('./lib/core/contains');
 require('./lib/core/each');
 require('./lib/core/filter');
+require('./lib/core/has_len');
 require('./lib/core/has');
-require('./lib/core/hasLength');
+require('./lib/core/includes');
+require('./lib/core/is_inst_of');
+require('./lib/core/is_type_of');
 require('./lib/core/is');
-require('./lib/core/isInstanceOf');
-require('./lib/core/isTypeOf');
 require('./lib/core/keys');
 require('./lib/core/map');
 require('./lib/core/size');
 require('./lib/core/uniq');
-require('./lib/core/values');
+require('./lib/core/vals');
+require('./lib/dom/attr');
 require('./lib/dom/dom');
+require('./lib/dom/find');
 require('./lib/dom/parse');
 require('./lib/dom/query');
-require('./lib/dom/attr');
-require('./lib/dom/find');
 
 const karma = global.window.__karma__;
 

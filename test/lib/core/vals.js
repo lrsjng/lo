@@ -1,8 +1,8 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
-test('lo.values()', () => {
-    assert.equal(typeof lo.values, 'function', 'is function');
+test('lo.vals()', () => {
+    assert.equal(typeof lo.vals, 'function', 'is function');
 
     [
         [{}, []],
@@ -19,6 +19,6 @@ test('lo.values()', () => {
         [{a: undefined}, [undefined]],
         [{a: 0}, [0]]
     ].forEach(([arg, exp], idx) => {
-        assert.deepEqual(lo.values(arg).sort(), exp.sort(), `fix#${idx}: (${insp(arg)}) -> ${insp(exp)}`);
+        assert.deepEqual(lo.vals(arg).sort(), exp.sort(), `fix#${idx}: (${insp(arg)}) -> ${insp(exp)}`);
     });
 });
