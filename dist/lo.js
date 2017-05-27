@@ -1,4 +1,4 @@
-/*! lo v0.27.0 - https://larsjung.de/lo/ */
+/*! lo v0.28.0 - https://larsjung.de/lo/ */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -53,65 +53,43 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = Object.assign({}, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3));
-
-/***/ },
-/* 1 */
 /***/ function(module, exports) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _OBJ_PROTO = Object.prototype;
-	var _OBJ_GET_PROTO = Object.getPrototypeOf;
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	var WIN = global.window;
+	var DOC = WIN.document;
+
 	var _ARR_PROTO = Array.prototype;
 
 	var _apply = function _apply(fn, ctx, args) {
 	    return fn.apply(ctx, args);
 	}; // eslint-disable-line prefer-reflect
-	var _create_type_check_fn = function _create_type_check_fn(type) {
-	    return function (x) {
-	        return _apply(_OBJ_PROTO.toString, x) === '[object ' + type + ']';
-	    };
-	};
-	var _is_obj = _create_type_check_fn('Object');
 
-	var is_obj = function is_obj(x) {
-	    return x !== null && (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object';
-	};
-	var is_plain_obj = function is_plain_obj(x) {
-	    return _is_obj(x) && (_OBJ_GET_PROTO(x) === _OBJ_PROTO || _OBJ_GET_PROTO(x) === null);
-	};
-	var is_arr = Array.isArray;
-	var is_args = _create_type_check_fn('Arguments');
-	var is_bool = _create_type_check_fn('Boolean');
-	var is_date = _create_type_check_fn('Date');
-	var is_err = _create_type_check_fn('Error');
-	var is_fn = _create_type_check_fn('Function');
-	var is_num = _create_type_check_fn('Number');
-	var is_re = _create_type_check_fn('RegExp');
-	var is_str = _create_type_check_fn('String');
-
-	var is_numeric = function is_numeric(x) {
-	    return is_num(x) && isFinite(x);
-	};
 	var is_type_of = function is_type_of(x, typ) {
 	    return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === typ;
 	};
 	var is_inst_of = function is_inst_of(x, typ) {
 	    return x ? x instanceof typ : false;
 	};
-	var is = function is(x) {
-	    return x !== undefined && x !== null;
+	var is_obj = function is_obj(x) {
+	    return x !== null && is_type_of(x, 'object');
 	};
-	var has = function has(x, prop) {
-	    return is(x) && _apply(_OBJ_PROTO.hasOwnProperty, x, [prop]);
+	var is_fn = function is_fn(x) {
+	    return is_type_of(x, 'function');
 	};
+	var is_str = function is_str(x) {
+	    return is_type_of(x, 'string');
+	};
+
 	var keys = function keys(x) {
 	    return is_obj(x) ? Object.keys(x) : [];
 	};
@@ -121,21 +99,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	};
 	var has_len = function has_len(x) {
-	    return is(x) && is_numeric(x.length);
-	};
-	var size = function size(x) {
-	    return has_len(x) ? x.length : keys(x).length;
-	};
-	var as_arr = function as_arr(x) {
-	    return has_len(x) ? x : vals(x);
+	    return x && is_type_of(x.length, 'number');
 	};
 	var to_arr = function to_arr(x) {
-	    return is_arr(x) ? x : has_len(x) ? _apply(_ARR_PROTO.slice, x) : vals(x);
-	};
-	var as_fn = function as_fn(x) {
-	    return is_fn(x) ? x : function () {
-	        return x;
-	    };
+	    return Array.isArray(x) ? x : has_len(x) ? Array.from(x) : vals(x);
 	};
 
 	var for_each = function for_each(x, fn, ctx) {
@@ -146,125 +113,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _apply(fn, ctx, [x[key], key, x]);
 	    });
 	};
-	var each = function each(x, fn, ctx) {
+	var _each = function _each(x, fn, ctx) {
 	    return (has_len(x) ? for_each : for_own)(x, fn, ctx);
 	};
 
-	var map = function map(x, fn) {
-	    return to_arr(x).map(fn);
-	};
-	var filter = function filter(x, fn) {
-	    return to_arr(x).filter(fn);
-	};
-	var every = function every(x, fn) {
-	    return to_arr(x).every(fn);
-	};
-	var some = function some(x, fn) {
-	    return to_arr(x).some(fn);
-	};
-	var reduce = function reduce(x, fn, init) {
-	    return to_arr(x).reduce(fn, init);
-	};
-	var idx_of = function idx_of(x, el) {
-	    return to_arr(x).indexOf(el);
-	};
-	var includes = function includes(x, el) {
-	    return idx_of(x, el) >= 0;
-	};
-	var compact = function compact(x) {
-	    return filter(x, function (val) {
-	        return !!val;
-	    });
-	};
-
-	var cmp = function cmp(a, b) {
-	    return a < b ? -1 : a > b ? 1 : 0;
-	};
-	var sort = function sort(x, fn) {
-	    return to_arr(x).sort(fn);
-	};
-	var sort_by = function sort_by(x, fn) {
-	    return sort(x, function (a, b) {
-	        return cmp(fn(a), fn(b));
-	    });
-	};
-
-	var uniq = function uniq(x) {
-	    var cache = {};
-	    return filter(x, function (val) {
-	        if (!has(cache, val)) {
-	            cache[val] = 1;
-	            return true;
-	        }
-	        return false;
-	    });
-	};
-
-	module.exports = {
-	    as_arr: as_arr,
-	    as_fn: as_fn,
-	    cmp: cmp,
-	    compact: compact,
-	    includes: includes,
-	    each: each,
-	    every: every,
-	    filter: filter,
-	    for_each: for_each,
-	    for_own: for_own,
-	    has: has,
-	    has_len: has_len,
-	    idx_of: idx_of,
-	    is: is,
-	    is_args: is_args,
-	    is_arr: is_arr,
-	    is_bool: is_bool,
-	    is_date: is_date,
-	    is_err: is_err,
-	    is_fn: is_fn,
-	    is_inst_of: is_inst_of,
-	    is_num: is_num,
-	    is_numeric: is_numeric,
-	    is_obj: is_obj,
-	    is_plain_obj: is_plain_obj,
-	    is_re: is_re,
-	    is_str: is_str,
-	    is_type_of: is_type_of,
-	    keys: keys,
-	    map: map,
-	    reduce: reduce,
-	    size: size,
-	    some: some,
-	    sort: sort,
-	    sort_by: sort_by,
-	    to_arr: to_arr,
-	    uniq: uniq,
-	    vals: vals
-	};
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var _require = __webpack_require__(1),
-	    _each = _require.each,
-	    every = _require.every,
-	    filter = _require.filter,
-	    for_each = _require.for_each,
-	    has_len = _require.has_len,
-	    is = _require.is,
-	    is_inst_of = _require.is_inst_of,
-	    is_str = _require.is_str,
-	    _map = _require.map,
-	    to_arr = _require.to_arr;
-
-	var WIN = global.window;
-	var DOC = WIN.document;
+	// dom
 
 	var parse_html = function () {
 	    var create = function create(name) {
@@ -310,7 +163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var container = find_container(str);
 	        container.innerHTML = str;
 	        var res = to_arr(container.childNodes);
-	        for_each(res, function (el) {
+	        res.forEach(function (el) {
 	            return container.removeChild(el);
 	        });
 	        container.innerHTML = '';
@@ -333,7 +186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return is_inst_of(x, WIN.Document);
 	};
 	var is_win = function is_win(x) {
-	    return is(x) && x.window === x && is_doc(x.document);
+	    return x && x.window === x && is_doc(x.document);
 	};
 	var is_el_doc_win = function is_el_doc_win(x) {
 	    return is_el(x) || is_doc(x) || is_win(x);
@@ -382,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else {
 	        els = has_len(arg) ? arg : [arg];
 	    }
-	    els = filter(els, is_el_doc_win);
+	    els = els.filter(is_el_doc_win);
 
 	    return Object.assign(Object.create(dom.prototype), els, { length: els.length });
 	};
@@ -395,7 +248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this;
 	    },
 	    map: function map(fn) {
-	        return _map(this, fn);
+	        return Array.from(this, fn);
 	    },
 	    find: function find(selector) {
 	        var _ref;
@@ -510,7 +363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.add_cls.apply(this, arguments);
 	    },
 	    has_cls: function has_cls(name) {
-	        return every(this, function (el) {
+	        return Array.from(this).every(function (el) {
 	            return el.classList.contains(name);
 	        });
 	    },
@@ -580,37 +433,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	module.exports = {
-	    is_el: is_el,
-	    is_doc: is_doc,
-	    is_win: is_win,
-	    is_el_doc_win: is_el_doc_win,
-	    on_ready: on_ready,
-	    on_resize: on_resize,
-	    on_print: on_print,
-	    dom: dom
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	// binder
 
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var _require = __webpack_require__(1),
-	    includes = _require.includes,
-	    each = _require.each,
-	    is_fn = _require.is_fn,
-	    is_str = _require.is_str,
-	    map = _require.map,
-	    to_arr = _require.to_arr;
-
-	var _WIN = global.window;
 	var _INPUT_ELS = ['input', 'select', 'textarea'];
 	var _RE_NAME = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
 	var _RE_TEMPLATE = /\[([_a-zA-Z][_a-zA-Z0-9]*)\]/g;
@@ -622,7 +446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	var _def_prop = Object._def_prop;
 	var _is_inp_el = function _is_inp_el(el) {
-	    return includes(_INPUT_ELS, el.nodeName.toLowerCase());
+	    return _INPUT_ELS.includes(el.nodeName.toLowerCase());
 	};
 	var _is_name = function _is_name(x) {
 	    return is_str(x) && _RE_NAME.test(x);
@@ -636,7 +460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        els = inst._els[name];
 	    }
 	    var value = inst.val[name];
-	    each(els, function (el) {
+	    _each(els, function (el) {
 	        var prop = _is_inp_el(el) ? 'value' : 'innerHTML';
 	        if (el[prop] !== value) {
 	            el[prop] = value;
@@ -646,7 +470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var call_listeners = function call_listeners(inst, name) {
 	    var value = inst.val[name];
-	    each(inst._fns[name], function (fn) {
+	    _each(inst._fns[name], function (fn) {
 	        if (is_fn(fn)) {
 	            fn(value, name, inst);
 	        }
@@ -689,25 +513,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var find_all_text_nodes = function find_all_text_nodes(node) {
-	    var _ref;
+	    var _ref2;
 
-	    var textnodes = (_ref = []).concat.apply(_ref, _toConsumableArray(map(node.childNodes, function (n) {
+	    var textnodes = (_ref2 = []).concat.apply(_ref2, _toConsumableArray(Array.from(node.childNodes, function (n) {
 	        return find_all_text_nodes(n);
 	    })));
-	    if (node.nodeType === _WIN.Node.TEXT_NODE) {
+	    if (node.nodeType === WIN.Node.TEXT_NODE) {
 	        textnodes.push(node);
 	    }
 	    return textnodes;
 	};
 
 	var compile_text_node = function compile_text_node(node) {
-	    var div = _WIN.document.createElement('div');
+	    var div = DOC.createElement('div');
 	    div.innerHTML = node.nodeValue.replace(_RE_TEMPLATE, function (match, name) {
 	        return '<span ' + _ATTR_KEY + '=\'' + name + '\'></span>';
 	    });
 	    if (div.childNodes.length) {
 	        var parent = node.parentNode;
-	        each(to_arr(div.childNodes), function (n) {
+	        _each(div.childNodes, function (n) {
 	            parent.insertBefore(n, node);
 	        });
 	        parent.removeChild(node);
@@ -729,7 +553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 
 	        var plain = _create_obj();
-	        each(this.val, function (value, name) {
+	        _each(this.val, function (value, name) {
 	            plain[name] = {
 	                val: value,
 	                els: _this._els[name].length,
@@ -746,11 +570,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    add: function add(obj) {
 	        var _this2 = this;
 
-	        each(obj, function (els, name) {
+	        _each(obj, function (els, name) {
 	            if (ensure_name(_this2, name)) {
 	                update_els(_this2, name, els);
-	                each(els, function (el) {
-	                    if (!includes(_this2._els[name], el)) {
+	                _each(els, function (el) {
+	                    if (!_this2._els[name].includes(el)) {
 	                        _this2._els[name].push(el);
 	                        if (_is_inp_el(el)) {
 	                            el.addEventListener('input', function () {
@@ -769,7 +593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    set: function set(obj) {
 	        var _this3 = this;
 
-	        each(obj, function (value, name) {
+	        _each(obj, function (value, name) {
 	            if (ensure_name(_this3, name)) {
 	                _this3.val[name] = value;
 	            }
@@ -789,11 +613,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this;
 	        }
 	        if (split) {
-	            each(find_all_text_nodes(containerEl), compile_text_node);
+	            _each(find_all_text_nodes(containerEl), compile_text_node);
 	        }
 	        var els = to_arr(containerEl.querySelectorAll('[' + _ATTR_KEY + ']'));
 	        els.unshift(containerEl);
-	        each(els, function (el) {
+	        _each(els, function (el) {
 	            if (is_fn(el.getAttribute) && el.getAttribute(_ATTR_KEY)) {
 	                _this4.add(_defineProperty({}, el.getAttribute(_ATTR_KEY), [el]));
 	            }
@@ -803,6 +627,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	module.exports = {
+	    each: _each,
+	    for_each: for_each,
+	    for_own: for_own,
+	    is_fn: is_fn,
+	    is_obj: is_obj,
+	    is_str: is_str,
+	    keys: keys,
+	    to_arr: to_arr,
+	    vals: vals,
+
+	    is_el: is_el,
+	    is_doc: is_doc,
+	    is_win: is_win,
+	    on_ready: on_ready,
+	    on_resize: on_resize,
+	    on_print: on_print,
+	    dom: dom,
+
 	    binder: binder
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))

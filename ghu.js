@@ -29,7 +29,7 @@ ghu.task('lint', () => {
 });
 
 ghu.task('build:scripts', runtime => {
-    const webpackConfig = {
+    const webpack_config = {
         output: {
             library: NAME,
             libraryTarget: 'umd'
@@ -49,7 +49,7 @@ ghu.task('build:scripts', runtime => {
     };
 
     return read(`${LIB}/index.js`)
-        .then(webpack(webpackConfig, {showStats: false}))
+        .then(webpack(webpack_config, {showStats: false}))
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/${NAME}.js`, {overwrite: true}))
         .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.js`, {overwrite: true}))
@@ -65,7 +65,7 @@ ghu.task('build:copy', () => {
 });
 
 ghu.task('build:test', runtime => {
-    const webpackConfig = {
+    const webpack_config = {
         module: {
             loaders: [
                 {
@@ -90,7 +90,7 @@ ghu.task('build:test', runtime => {
 
     return Promise.all([
         read(`${TEST}/index.js`)
-            .then(webpack(webpackConfig, {showStats: false}))
+            .then(webpack(webpack_config, {showStats: false}))
             // .then(uglify({compressor: {warnings: false}}))
             .then(wrap(runtime.commentJs))
             .then(write(`${BUILD}/test/index.js`, {overwrite: true})),
