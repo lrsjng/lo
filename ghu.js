@@ -77,10 +77,6 @@ ghu.task('build:test', runtime => {
                     }
                 },
                 {
-                    include: [LIB],
-                    loader: 'isparta-loader'
-                },
-                {
                     test: /jsdom/,
                     loader: 'null-loader'
                 }

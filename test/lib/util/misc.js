@@ -1,4 +1,4 @@
-const {test, assert, insp} = require('scar');
+const {test, assert, insp, spy} = require('scar');
 const {lo} = require('../../util');
 
 /* eslint-disable no-new-wrappers, no-array-constructor, no-new-object */
@@ -26,9 +26,7 @@ const FIX_OBJECT = [
     new Error(undefined),
     new Error('msg'),
     new TypeError(),
-    new SyntaxError()
-];
-const FIX_ARGUMENTS = [
+    new SyntaxError(),
     (() => arguments)(),
     (() => arguments)(undefined),
     (() => arguments)(null),
@@ -45,9 +43,30 @@ const FIXTURES = [
     ...FIX_ARRAY,
     ...FIX_REGEXP,
     ...FIX_FUNCTION,
-    ...FIX_OBJECT,
-    ...FIX_ARGUMENTS
+    ...FIX_OBJECT
 ];
+
+test('lo.for_each()', () => {
+    assert.equal(typeof lo.for_each, 'function', 'is function');
+    assert.throws(() => lo.for_each(), /TypeError/, 'no args throws');
+    assert.throws(() => lo.for_each([1, 2]), /TypeError/, 'no fn throws');
+
+    [
+        [],
+        [null],
+        [undefined],
+        [1, 2, 3]
+    ].forEach((x, idx) => {
+        const msg = `fix#1.${idx}: ${insp(x)}`;
+        const fn = spy();
+
+        assert.equal(lo.for_each(x, fn), undefined, msg);
+        assert.equal(fn.calls.length, x.length, msg);
+        x.forEach((el, elIdx) => {
+            assert.deepEqual(fn.calls[elIdx].args, [el, elIdx, x], msg);
+        });
+    });
+});
 
 test('lo.is_str()', () => {
     FIXTURES.forEach((x, idx) => {
@@ -60,12 +79,5 @@ test('lo.is_fn()', () => {
     FIXTURES.forEach((x, idx) => {
         const exp = FIX_FUNCTION.includes(x);
         assert.equal(lo.is_fn(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
-    });
-});
-
-test('lo.is_obj()', () => {
-    FIXTURES.forEach((x, idx) => {
-        const exp = x !== null && typeof x === 'object'; // :(
-        assert.equal(lo.is_obj(x), exp, `fix#${idx}: (${insp(x)}) -> ${insp(exp)}`);
     });
 });

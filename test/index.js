@@ -1,5 +1,5 @@
 if (!global.window) {
-    global.window = require('jsdom').jsdom().defaultView;
+    global.window = new (require('jsdom')).JSDOM().window;
 }
 
 const {test} = require('scar');
@@ -8,19 +8,17 @@ const {lo, pin} = require('./util');
 pin();
 
 require('./lib/lo');
-require('./lib/core/each');
-require('./lib/core/is');
-require('./lib/core/keys');
-require('./lib/core/vals');
+require('./lib/util/misc');
 require('./lib/dom/attr');
 require('./lib/dom/dom');
 require('./lib/dom/find');
 require('./lib/dom/parse');
 require('./lib/dom/query');
+require('./lib/binder/misc');
 
 const karma = global.window.__karma__;
 
-const karmaReporter = k => {
+const create_karma_reporter = k => {
     return (type, suite, t) => {
         if (type === 'beforeAll') {
             k.info({total: suite.total});
@@ -47,7 +45,7 @@ if (karma) {
     karma.start = () => {
         test.run({
             sync: true,
-            reporter: karmaReporter(karma)
+            reporter: create_karma_reporter(karma)
         });
     };
 } else {

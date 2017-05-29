@@ -12,27 +12,17 @@ test('window', () => {
 test('lo', () => {
     assert.ok(global.window.lo);
 
-    // debounce
-    // difference
-    // intersection
-
     assert.deepEqual(Object.keys(lo).sort(), [
-        'binder',
-        'dom',
-        'each',
         'for_each',
-        'for_own',
-        'is_doc',
-        'is_el',
         'is_fn',
-        'is_obj',
         'is_str',
-        'is_win',
-        'keys',
-        'on_print',
+        'to_arr',
+
         'on_ready',
         'on_resize',
-        'to_arr',
-        'vals'
+        'on_print',
+        'dom',
+
+        'binder'
     ].sort());
 });

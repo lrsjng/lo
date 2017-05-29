@@ -2,8 +2,7 @@ module.exports = config => {
     const settings = {
         basePath: 'build/test',
         files: ['index.js'],
-        reporters: ['dots', 'coverage'],
-        coverageReporter: {type: 'html', dir: 'coverage'},
+        reporters: ['dots'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
@@ -15,7 +14,6 @@ module.exports = config => {
 
     if (process.env.TRAVIS) {
         Object.assign(settings, {
-            coverageReporter: {type: 'text'},
             browsers: ['Chrome_Travis', 'Firefox'],
             concurrency: 1,
             singleRun: true,
