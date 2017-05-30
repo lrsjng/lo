@@ -59,30 +59,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var WIN = global.window;
 	var DOC = WIN.document;
 
-	var ATTR_KEY = 'data-tpl';
+	var ATTR_KEY = 'data-bdg';
 	var INPUT_ELS = ['input', 'select', 'textarea'];
 	var RE_NAME = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
-	var RE_TEMPLATE = /\[([_a-zA-Z][_a-zA-Z0-9]*)\]/g;
+	var RE_BDG = /\[([_a-zA-Z][_a-zA-Z0-9]*)\]/g;
 
 	var create_el = function create_el(name) {
 	    return DOC.createElement(name);
 	};
 
-	var is_type_of = function is_type_of(x, typ) {
-	    return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === typ;
-	};
 	var is_fn = function is_fn(x) {
-	    return is_type_of(x, 'function');
+	    return typeof x === 'function';
 	};
 	var is_str = function is_str(x) {
-	    return is_type_of(x, 'string');
+	    return typeof x === 'string';
 	};
 	var is_name = function is_name(x) {
 	    return is_str(x) && RE_NAME.test(x);
@@ -100,27 +95,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return is_el(x) || is_doc(x) || is_win(x);
 	};
 	var is_inp_el = function is_inp_el(el) {
-	    return INPUT_ELS.includes(el.nodeName.toLowerCase());
+	    return is_el(el) && INPUT_ELS.includes(el.nodeName.toLowerCase());
 	};
 
-	var has_len = function has_len(x) {
-	    return x && is_type_of(x.length, 'number');
-	};
-	var to_arr = function to_arr(x) {
-	    return Array.isArray(x) ? x : has_len(x) ? Array.from(x) : [];
-	};
-	var for_each = function for_each(x, fn) {
-	    return to_arr(x).forEach(fn);
+	var as_arr = function as_arr(x) {
+	    return Array.isArray(x) ? x : x ? Array.from(x) : [];
 	};
 
 	var _on = function _on(el, type, fn) {
 	    return el.addEventListener(type, fn);
 	};
-	var _off = function _off(el, type, fn) {
-	    return el.removeEventListener(type, fn);
-	};
-
-	var table_log = console.table || console.log;
 
 	// dom
 
@@ -164,7 +148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return function (str) {
 	        var container = find_container(str);
 	        container.innerHTML = str;
-	        var res = to_arr(container.childNodes);
+	        var res = as_arr(container.childNodes);
 	        res.forEach(function (el) {
 	            return container.removeChild(el);
 	        });
@@ -175,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var query_all = function query_all(selector, context) {
 	    try {
-	        return to_arr((context || DOC).querySelectorAll(selector));
+	        return as_arr((context || DOC).querySelectorAll(selector));
 	    } catch (err) {
 	        return [];
 	    }
@@ -189,23 +173,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	var on_resize = function on_resize(fn) {
-	    _on(WIN, 'resize', fn);
-	};
-
-	var on_print = function on_print(before, after) {
-	    WIN.matchMedia('print').addListener(function (mql) {
-	        if (mql.matches) {
-	            before();
-	        } else {
-	            after();
-	        }
-	    });
-	};
-
 	var dom = function dom(arg) {
 	    if (arg instanceof dom) {
 	        return arg;
+	    }
+
+	    if (is_fn(arg)) {
+	        return on_ready(arg);
 	    }
 
 	    var els = void 0;
@@ -215,7 +189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else if (is_el_doc_win(arg)) {
 	        els = [arg];
 	    } else {
-	        els = to_arr(arg);
+	        els = as_arr(arg);
 	    }
 	    els = els.filter(is_el_doc_win);
 
@@ -226,11 +200,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    constructor: dom,
 
 	    each: function each(fn) {
-	        for_each(this, fn);
+	        as_arr(this).forEach(fn);
 	        return this;
 	    },
 	    map: function map(fn) {
-	        return Array.from(this, fn);
+	        return as_arr(this).map(fn);
 	    },
 	    find: function find(selector) {
 	        var _ref;
@@ -246,7 +220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    off: function off(type, fn) {
 	        return this.each(function (el) {
-	            return _off(el, type, fn);
+	            return el.removeEventListener(type, fn);
 	        });
 	    },
 	    attr: function attr(key, value) {
@@ -290,9 +264,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            el.textContent = str;
 	        });
 	    },
-	    clr: function clr() {
-	        return this.html('');
-	    },
 	    rm: function rm() {
 	        return this.each(function (el) {
 	            var parent = el.parentNode;
@@ -303,8 +274,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    rpl: function rpl(arg) {
 	        return this.each(function (el) {
-	            el.outerHTML = dom(arg).map(function (rplEl) {
-	                return rplEl.outerHTML;
+	            el.outerHTML = dom(arg).map(function (rpl_el) {
+	                return rpl_el.outerHTML;
 	            }).join('');
 	        });
 	    },
@@ -337,7 +308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    cls: function cls() {
 	        if (!arguments.length) {
-	            return this.length ? to_arr(this[0].classList) : [];
+	            return this.length ? as_arr(this[0].classList) : [];
 	        }
 	        this.each(function (el) {
 	            el.className = '';
@@ -419,11 +390,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var update_els = function update_els(inst, name, els) {
 	    var bdg = inst._bdgs[name];
-	    var val = bdg.get();
-	    if (!els) {
-	        els = bdg.els;
-	    }
-	    for_each(els, function (el) {
+	    var val = bdg.val;
+	    as_arr(els || bdg.els).forEach(function (el) {
 	        var prop = is_inp_el(el) ? 'value' : 'innerHTML';
 	        if (el[prop] !== val) {
 	            el[prop] = val;
@@ -433,9 +401,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var call_listeners = function call_listeners(inst, name) {
 	    var bdg = inst._bdgs[name];
-	    for_each(bdg.fns, function (fn) {
+	    bdg.fns.forEach(function (fn) {
 	        if (is_fn(fn)) {
-	            fn(bdg.get(), name, inst);
+	            fn(bdg.val, name, inst);
 	        }
 	    });
 	};
@@ -454,7 +422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var compile_text_node = function compile_text_node(node) {
 	    var div = create_el('div');
-	    div.innerHTML = node.nodeValue.replace(RE_TEMPLATE, function (match, name) {
+	    div.innerHTML = node.nodeValue.replace(RE_BDG, function (match, name) {
 	        return '<span ' + ATTR_KEY + '=\'' + name + '\'></span>';
 	    });
 	    if (div.childNodes.length) {
@@ -469,10 +437,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var create_binding = function create_binding(inst, name) {
 	    var val = name;
 	    return {
-	        get: function get() {
+	        get val() {
 	            return val;
 	        },
-	        set: function set(x) {
+	        set val(x) {
 	            x = String(x);
 	            if (val !== x) {
 	                val = x;
@@ -507,16 +475,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    log: function log() {
 	        var _this = this;
 
-	        var plain = {};
-	        Object.keys(this._bdgs).forEach(function (name) {
+	        (console.table || console.log)(Object.keys(this._bdgs).map(function (name) {
 	            var bdg = _this._bdgs[name];
-	            plain[name] = {
-	                val: bdg.get(),
+	            return {
+	                name: name,
+	                val: bdg.val,
 	                els: bdg.els.length,
 	                fns: bdg.fns.length
 	            };
-	        });
-	        table_log(plain);
+	        }));
 	        return this;
 	    },
 	    add: function add(name) {
@@ -528,16 +495,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            update_els(this, name, els);
-	            for_each(els, function (el) {
+	            as_arr(els).forEach(function (el) {
 	                if (!bdg.els.includes(el)) {
 	                    bdg.els.push(el);
 	                    if (is_inp_el(el)) {
-	                        _on(el, 'input', function () {
-	                            bdg.set(el.value);
-	                        });
-	                        _on(el, 'change', function () {
-	                            bdg.set(el.value);
-	                        });
+	                        var set = function set() {
+	                            bdg.val = el.value;
+	                        };
+	                        _on(el, 'input', set);
+	                        _on(el, 'change', set);
 	                    }
 	                }
 	            });
@@ -546,31 +512,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    get: function get(name) {
 	        var bdg = this._bdgs[name];
-	        return bdg && bdg.get();
+	        return bdg && bdg.val;
 	    },
 	    set: function set(name, val) {
 	        if (ensure_name(this, name)) {
-	            this._bdgs[name].set(val);
+	            this._bdgs[name].val = val;
 	        }
 	        return this;
 	    },
 	    on: function on(name, fn) {
 	        if (ensure_name(this, name)) {
-	            this._bdgs[name].fns.push(fn);
+	            var bdg = this._bdgs[name];
+	            if (!bdg.fns.includes(fn)) {
+	                bdg.fns.push(fn);
+	            }
 	        }
 	        return this;
 	    },
-	    collect: function collect(containerEl, split) {
+	    collect: function collect(root_el, split) {
 	        var _this2 = this;
 
-	        if (!containerEl || !is_fn(containerEl.querySelectorAll)) {
+	        if (!is_el(root_el) && !is_doc(root_el)) {
 	            return this;
 	        }
 	        if (split) {
-	            find_all_text_nodes(containerEl).forEach(compile_text_node);
+	            find_all_text_nodes(root_el).forEach(compile_text_node);
 	        }
-	        var els = query_all('[' + ATTR_KEY + ']', containerEl);
-	        els.unshift(containerEl);
+	        var els = query_all('[' + ATTR_KEY + ']', root_el);
+	        els.unshift(root_el);
 	        els.forEach(function (el) {
 	            if (is_fn(el.getAttribute) && el.getAttribute(ATTR_KEY)) {
 	                _this2.add(el.getAttribute(ATTR_KEY), el);
@@ -581,16 +550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	module.exports = {
-	    for_each: for_each,
-	    is_fn: is_fn,
-	    is_str: is_str,
-	    to_arr: to_arr,
-
-	    on_ready: on_ready,
-	    on_resize: on_resize,
-	    on_print: on_print,
 	    dom: dom,
-
 	    binder: binder
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))

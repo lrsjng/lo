@@ -8,7 +8,6 @@ const {lo, pin} = require('./util');
 pin();
 
 require('./lib/lo');
-require('./lib/util/misc');
 require('./lib/dom/attr');
 require('./lib/dom/dom');
 require('./lib/dom/find');

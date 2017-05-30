@@ -16,7 +16,6 @@ test('lo.dom()', () => {
         'val',
         'html',
         'text',
-        'clr',
         'rm',
         'rpl',
         'app',
@@ -28,4 +27,10 @@ test('lo.dom()', () => {
         'add_cls',
         'rm_cls'
     ].sort(), 'props');
+
+    const dom = lo.dom();
+    assert.equal(typeof dom, 'object');
+    assert.equal(dom.constructor, lo.dom);
+    assert.ok(dom instanceof lo.dom);
+    assert.equal(dom.length, 0);
 });
