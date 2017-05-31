@@ -1,6 +1,6 @@
 {
   "name": "lo",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
