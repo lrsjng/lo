@@ -1,5 +1,5 @@
 const {resolve, join} = require('path');
-const {ghu, jszip, mapfn, read, remove, run, uglify, watch, webpack, wrap, write} = require('ghu');
+const {babel, ghu, jszip, mapfn, read, remove, run, uglify, watch, webpack, wrap, write} = require('ghu');
 
 const NAME = 'lo';
 
@@ -29,27 +29,13 @@ ghu.task('lint', () => {
 });
 
 ghu.task('build:scripts', runtime => {
-    const webpack_config = {
-        output: {
-            library: NAME,
-            libraryTarget: 'umd'
-        },
-        module: {
-            loaders: [
-                {
-                    include: [LIB],
-                    loader: 'babel-loader',
-                    query: {
-                        cacheDirectory: true,
-                        presets: ['es2015']
-                    }
-                }
-            ]
-        }
-    };
-
     return read(`${LIB}/index.js`)
-        .then(webpack(webpack_config, {showStats: false}))
+        .then(babel({presets: ['es2015']}))
+        .then(x => {
+            x[0].content = x[0].content.replace('module.exports', 'window.lo');
+            return x;
+        })
+        .then(wrap('(function () {\n', '\n}())'))
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/${NAME}.js`, {overwrite: true}))
         .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.js`, {overwrite: true}))
