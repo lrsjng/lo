@@ -1,4 +1,4 @@
-/*! lo v0.32.0 - https://larsjung.de/lo/ */
+/*! lo v0.33.0 - https://larsjung.de/lo/ */
 (function () {
 'use strict';
 
@@ -56,11 +56,6 @@ var parse_html = function () {
     var div = create_el('div');
 
     var find_container = function find_container(str) {
-        // for (const [re, el] of rules) {
-        //     if (re.test(str)) {
-        //         return el;
-        //     }
-        // }
         for (var i = 0; i < rules.length; i += 1) {
             if (rules[i][0].test(str)) {
                 return rules[i][1];
