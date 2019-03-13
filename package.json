@@ -26,9 +26,9 @@
     "ghu": "0.13.0",
     "jquery": "3.3.1",
     "jsdom": "14.0.0",
-    "karma": "1.7.0",
-    "karma-chrome-launcher": "2.1.1",
-    "karma-firefox-launcher": "1.0.1",
+    "karma": "4.0.1",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-firefox-launcher": "1.1.0",
     "null-loader": "0.1.1",
     "scar": "1.2.0"
   },
