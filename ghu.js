@@ -30,7 +30,7 @@ ghu.task('lint', () => {
 
 ghu.task('build:scripts', runtime => {
     return read(`${LIB}/index.js`)
-        .then(babel({presets: ['es2015']}))
+        .then(babel({presets: ['env']}))
         .then(x => {
             x[0].content = x[0].content.replace('module.exports', 'window.lo');
             return x;
@@ -59,7 +59,7 @@ ghu.task('build:test', runtime => {
                     loader: 'babel-loader',
                     query: {
                         cacheDirectory: true,
-                        presets: ['es2015']
+                        presets: ['env']
                     }
                 },
                 {
