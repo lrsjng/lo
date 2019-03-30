@@ -1,6 +1,6 @@
 {
   "name": "lo",
-  "version": "0.34.0",
+  "version": "0.35.0",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
@@ -20,17 +20,18 @@
   },
   "main": "dist/lo.js",
   "devDependencies": {
-    "babel-loader": "7.0.0",
-    "babel-preset-env": "1.7.0",
-    "eslint": "5.15.1",
-    "ghu": "0.13.0",
+    "@babel/core": "7.4.0",
+    "@babel/preset-env": "7.4.2",
+    "babel-loader": "8.0.5",
+    "eslint": "5.16.0",
+    "ghu": "0.15.0",
     "jquery": "3.3.1",
     "jsdom": "14.0.0",
     "karma": "4.0.1",
     "karma-chrome-launcher": "2.2.0",
     "karma-firefox-launcher": "1.1.0",
     "null-loader": "0.1.1",
-    "scar": "1.2.0"
+    "scar": "1.4.0"
   },
   "engines": {
     "node": ">=8.0.0"

@@ -1,4 +1,4 @@
-/*! lo v0.34.0 - https://larsjung.de/lo/ */
+/*! lo v0.35.0 - https://larsjung.de/lo/ */
 (function () {
 'use strict';
 

@@ -24,10 +24,6 @@ ghu.task('clean', 'delete build folder', () => {
     return remove(`${BUILD}, ${DIST}`);
 });
 
-ghu.task('lint', () => {
-    return run('eslint .', {stdio: 'inherit'});
-});
-
 ghu.task('build:scripts', runtime => {
     return read(`${LIB}/index.js`)
         .then(babel({presets: ['env']}))
@@ -39,7 +35,7 @@ ghu.task('build:scripts', runtime => {
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/${NAME}.js`, {overwrite: true}))
         .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.js`, {overwrite: true}))
-        .then(uglify({compressor: {warnings: false}}))
+        .then(uglify())
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/${NAME}.min.js`, {overwrite: true}))
         .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.min.js`, {overwrite: true}));
@@ -52,14 +48,15 @@ ghu.task('build:copy', () => {
 
 ghu.task('build:test', runtime => {
     const webpack_config = {
+        mode: 'none',
         module: {
-            loaders: [
+            rules: [
                 {
                     include: [LIB, TEST],
                     loader: 'babel-loader',
                     query: {
                         cacheDirectory: true,
-                        presets: ['env']
+                        presets: ['@babel/preset-env']
                     }
                 },
                 {
@@ -73,7 +70,7 @@ ghu.task('build:test', runtime => {
     return Promise.all([
         read(`${TEST}/index.js`)
             .then(webpack(webpack_config, {showStats: false}))
-            // .then(uglify({compressor: {warnings: false}}))
+            // .then(uglify())
             .then(wrap(runtime.commentJs))
             .then(write(`${BUILD}/test/index.js`, {overwrite: true})),
 
