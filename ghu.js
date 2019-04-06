@@ -26,7 +26,7 @@ ghu.task('clean', 'delete build folder', () => {
 
 ghu.task('build:scripts', runtime => {
     return read(`${LIB}/index.js`)
-        .then(babel({presets: ['env']}))
+        .then(babel({presets: ['@babel/preset-env']}))
         .then(x => {
             x[0].content = x[0].content.replace('module.exports', 'window.lo');
             return x;
@@ -47,25 +47,11 @@ ghu.task('build:copy', () => {
 });
 
 ghu.task('build:test', runtime => {
-    const webpack_config = {
-        mode: 'none',
-        module: {
-            rules: [
-                {
-                    include: [LIB, TEST],
-                    loader: 'babel-loader',
-                    query: {
-                        cacheDirectory: true,
-                        presets: ['@babel/preset-env']
-                    }
-                },
-                {
-                    test: /jsdom/,
-                    loader: 'null-loader'
-                }
-            ]
-        }
-    };
+    const webpack_config = webpack.cfg([LIB, TEST]);
+    webpack_config.module.rules.push({
+        test: /jsdom/,
+        loader: 'null-loader'
+    });
 
     return Promise.all([
         read(`${TEST}/index.js`)
