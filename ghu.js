@@ -1,5 +1,5 @@
 const {resolve, join} = require('path');
-const {babel, ghu, jszip, mapfn, read, remove, run, uglify, watch, webpack, wrap, write} = require('ghu');
+const {ghu, jszip, mapfn, read, remove, run, uglify, watch, webpack, wrap, write} = require('ghu');
 
 const NAME = 'lo';
 
@@ -26,12 +26,7 @@ ghu.task('clean', 'delete build folder', () => {
 
 ghu.task('build:scripts', runtime => {
     return read(`${LIB}/index.js`)
-        .then(babel({presets: ['@babel/preset-env']}))
-        .then(x => {
-            x[0].content = x[0].content.replace('module.exports', 'window.lo');
-            return x;
-        })
-        .then(wrap('(function () {\n', '\n}())'))
+        .then(webpack(webpack.cfg_umd('lo', [LIB]), {showStats: false}))
         .then(wrap(runtime.commentJs))
         .then(write(`${DIST}/${NAME}.js`, {overwrite: true}))
         .then(write(`${BUILD}/${NAME}-${runtime.pkg.version}.js`, {overwrite: true}))

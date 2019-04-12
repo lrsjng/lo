@@ -1,6 +1,6 @@
 {
   "name": "lo",
-  "version": "0.36.0",
+  "version": "0.37.0",
   "description": "Lightweight utility library for the browser.",
   "homepage": "https://larsjung.de/lo/",
   "bugs": "https://github.com/lrsjng/lo/issues",
@@ -25,7 +25,7 @@
     "babel-loader": "8.0.5",
     "eslint": "5.16.0",
     "ghu": "0.17.0",
-    "jquery": "3.3.1",
+    "jquery": "3.4.0",
     "jsdom": "14.0.0",
     "karma": "4.0.1",
     "karma-chrome-launcher": "2.2.0",
