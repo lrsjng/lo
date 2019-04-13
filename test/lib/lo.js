@@ -11,9 +11,7 @@ test('window', () => {
 
 test('lo', () => {
     assert.ok(global.window.lo);
+    assert.ok(global.window.lo === lo);
 
-    assert.deepEqual(Object.keys(lo).sort(), [
-        'dom',
-        'binder'
-    ].sort());
+    assert.deepEqual(Object.keys(lo).sort(), ['dom', 'binder'].sort());
 });

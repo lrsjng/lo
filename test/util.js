@@ -1,26 +1,26 @@
 const jquery = require('jquery');
 
-let title;
-let htmlId;
-let htmlClasses;
-let bodyId;
-let bodyClasses;
-let $pinnedElements;
+let doc_title;
+let html_id;
+let html_class;
+let body_id;
+let body_class;
+let $pinned_els;
 
 const pin = () => {
-    title = global.window.document.title;
-    htmlId = jquery('html').attr('id');
-    htmlClasses = jquery('html').attr('class');
-    bodyId = jquery('body').attr('id');
-    bodyClasses = jquery('body').attr('class');
-    $pinnedElements = jquery('head,body').children();
+    doc_title = global.window.document.title;
+    html_id = jquery('html').attr('id');
+    html_class = jquery('html').attr('class');
+    body_id = jquery('body').attr('id');
+    body_class = jquery('body').attr('class');
+    $pinned_els = jquery('head,body').children();
 };
 
 const restore = () => {
-    global.window.document.title = title;
-    jquery('html').attr('id', htmlId).attr('class', htmlClasses);
-    jquery('body').attr('id', bodyId).attr('class', bodyClasses);
-    jquery('head,body').children().not($pinnedElements).remove();
+    global.window.document.title = doc_title;
+    jquery('html').attr('id', html_id).attr('class', html_class);
+    jquery('body').attr('id', body_id).attr('class', body_class);
+    jquery('head,body').children().not($pinned_els).remove();
 };
 
 module.exports = {
