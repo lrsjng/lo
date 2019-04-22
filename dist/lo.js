@@ -1,18 +1,14 @@
-/*! lo v0.38.0 - https://larsjung.de/lo/ */
+/*! lo v0.39.0 - https://larsjung.de/lo/ */
 "use strict";
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 (function (root, factory) {
-  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && (typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object') {
+  var is_obj = function is_obj(x) {
+    return _typeof(x) === 'object';
+  };
+
+  if (is_obj(exports) && is_obj(module)) {
     module.exports = factory();
   } else {
     root.lo = factory();
@@ -149,11 +145,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return as_arr(this).map(fn);
     },
     find: function find(selector) {
-      var _ref;
-
-      return dom((_ref = []).concat.apply(_ref, _toConsumableArray(this.map(function (el) {
+      // return dom([].concat(...this.map(el => query_all(selector, el))));
+      return dom(this.map(function (el) {
         return query_all(selector, el);
-      }))));
+      }).flat());
     },
     on: function on(type, fn) {
       return this.each(function (el) {
@@ -275,10 +270,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
 
       return this.each(function (el) {
-        for (var _i = 0, _names = names; _i < _names.length; _i++) {
-          var name = _names[_i];
-          el.classList.add(name);
-        }
+        var _el$classList;
+
+        (_el$classList = el.classList).add.apply(_el$classList, names);
       });
     },
     rm_cls: function rm_cls() {
@@ -287,10 +281,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
 
       return this.each(function (el) {
-        for (var _i2 = 0, _names2 = names; _i2 < _names2.length; _i2++) {
-          var name = _names2[_i2];
-          el.classList.remove(name);
-        }
+        var _el$classList2;
+
+        (_el$classList2 = el.classList).remove.apply(_el$classList2, names);
       });
     }
   }; // binder
@@ -317,11 +310,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   };
 
   var find_all_text_nodes = function find_all_text_nodes(node) {
-    var _ref2;
-
-    var textnodes = (_ref2 = []).concat.apply(_ref2, _toConsumableArray(Array.from(node.childNodes, function (n) {
+    var textnodes = Array.from(node.childNodes, function (n) {
       return find_all_text_nodes(n);
-    })));
+    }).flat();
 
     if (node.nodeType === WIN.Node.TEXT_NODE) {
       textnodes.push(node);
