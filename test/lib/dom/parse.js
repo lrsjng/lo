@@ -1,8 +1,18 @@
 const {test, assert, insp} = require('scar');
 const {lo} = require('../../util');
 
+const ELS = `
+    a address area article audio b button canvas caption code col colgroup content
+    datalist dd decorator del details dialog div dl dt element em embed fieldset
+    figcaption figure font footer form h1 h2 h3 h4 h5 h6 header hgroup hr i iframe
+    img input ins label legend li link main map menu menuitem meta meter nav noscript
+    object ol optgroup option output p param pre progress script section select shadow
+    source span strong style summary table tbody td template textarea tfoot th thead
+    title tr track ul video
+`;
+
 test('lo.dom() - create element', () => {
-    'a address area article audio b button canvas caption code col colgroup content datalist dd decorator del details dialog div dl dt element em embed fieldset figcaption figure font footer form h1 h2 h3 h4 h5 h6 header hgroup hr i iframe img input ins label legend li link main map menu menuitem meta meter nav noscript object ol optgroup option output p param pre progress script section select shadow source span strong style summary table tbody td template textarea tfoot th thead title tr track ul video'.split(/\s+/).forEach((name, idx) => {
+    ELS.trim().split(/\s+/).forEach((name, idx) => {
         const msg = `fix#${idx}: ${insp(name)}`;
         const tag = `<${name}>`;
         const res = lo.dom(tag);

@@ -16,7 +16,6 @@ ghu.before(runtime => {
     runtime.comment = `${runtime.pkg.name} v${runtime.pkg.version} - ${runtime.pkg.homepage}`;
     runtime.commentJs = `/*! ${runtime.comment} */\n`;
     runtime.commentHtml = `<!-- ${runtime.comment} -->`;
-
     console.log(runtime.comment);
 });
 
@@ -42,15 +41,15 @@ ghu.task('build:copy', () => {
 });
 
 ghu.task('build:test', runtime => {
-    const webpack_config = webpack.cfg([LIB, TEST]);
-    webpack_config.module.rules.push({
+    const webpack_cfg = webpack.cfg([LIB, TEST]);
+    webpack_cfg.module.rules.push({
         test: /jsdom/,
         loader: 'null-loader'
     });
 
     return Promise.all([
         read(`${TEST}/index.js`)
-            .then(webpack(webpack_config, {showStats: false}))
+            .then(webpack(webpack_cfg, {showStats: false}))
             // .then(uglify())
             .then(wrap(runtime.commentJs))
             .then(write(`${BUILD}/test/index.js`, {overwrite: true})),

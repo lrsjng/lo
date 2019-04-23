@@ -24,6 +24,8 @@ const restore = () => {
 };
 
 module.exports = {
+    // lo: require('../dist/lo.js'),
+    // lo: require('../dist/lo.min.js'),
     lo: require('../lib'),
     pin,
     restore

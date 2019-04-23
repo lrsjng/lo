@@ -1,4 +1,4 @@
-/*! lo v0.39.0 - https://larsjung.de/lo/ */
+/*! lo v0.40.0 - https://larsjung.de/lo/ */
 "use strict";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -60,6 +60,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   var as_arr = function as_arr(x) {
     return Array.isArray(x) ? x : x ? Array.from(x) : [];
+  };
+
+  var flat = function flat(x) {
+    return x.reduce(function (res, xi) {
+      return res.concat(Array.isArray(xi) ? flat(xi) : xi);
+    }, []);
   };
 
   var _on = function on(el, type, fn) {
@@ -145,10 +151,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return as_arr(this).map(fn);
     },
     find: function find(selector) {
-      // return dom([].concat(...this.map(el => query_all(selector, el))));
-      return dom(this.map(function (el) {
+      return dom(flat(this.map(function (el) {
         return query_all(selector, el);
-      }).flat());
+      })));
     },
     on: function on(type, fn) {
       return this.each(function (el) {
@@ -310,9 +315,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   };
 
   var find_all_text_nodes = function find_all_text_nodes(node) {
-    var textnodes = Array.from(node.childNodes, function (n) {
+    var textnodes = flat(Array.from(node.childNodes, function (n) {
       return find_all_text_nodes(n);
-    }).flat();
+    }));
 
     if (node.nodeType === WIN.Node.TEXT_NODE) {
       textnodes.push(node);
