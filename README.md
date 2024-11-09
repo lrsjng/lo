@@ -1,16 +1,75 @@
 # lo
 
-[![license][license-img]][github] [![web][web-img]][web] [![github][github-img]][github] [![npm][npm-img]][npm]  
-[![version][npm-v-img]][npm] [![downloads][npm-dm-img]][npm]
+[![license][license-img]][github] [![github][github-img]][github] [![npm][npm-img]][npm]  
 
 
 Lightweight utility library for the browser.
 
 
+## lo.dom()
+
+Creates a new dom instance, this is an array-like collection of HTML elements.
+```js
+// create elements
+lo.dom('<div><span>hi</span></div>')
+
+// select via document.querySelectorAll
+lo.dom('div')
+
+// select HTML elements directly
+lo.dom(el)
+lo.dom([el1, el2])
+
+// run on doc ready
+lo.dom(fn)
+```
+
+dom methods are:
+```js
+.each(fn)
+.map(fn)
+.find(selector)
+.on(type, fn)
+.off(type, fn)
+.attr(key, value)
+.rm_attr(key)
+.val(value)
+.html(str)
+.text(str)
+.rm()
+.rpl(arg)
+.app(arg)
+.app_to(arg)
+.pre(arg)
+.pre_to(arg)
+.cls(...names)
+.has_cls(name)
+.add_cls(...names)
+.rm_cls(...names)
+```
+
+## lo.binder()
+
+Creates a new binder instance.
+```js
+// no options here
+lo.binder()
+```
+
+binder methods are:
+```js
+.log()
+.add(name, ...els)
+.set(name, val)
+.on(name, fn)
+.collect(root_el, split)
+```
+
+
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2020 Lars Jung (https://larsjung.de)
+Copyright (c) 2024 Lars Jung (https://larsjung.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,14 +90,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-[web]: https://larsjung.de/lo/
 [github]: https://github.com/lrsjng/lo
 [npm]: https://www.npmjs.org/package/lo
 
 [license-img]: https://img.shields.io/badge/license-MIT-a0a060.svg?style=flat-square
-[web-img]: https://img.shields.io/badge/web-larsjung.de/lo-a0a060.svg?style=flat-square
 [github-img]: https://img.shields.io/badge/github-lrsjng/lo-a0a060.svg?style=flat-square
 [npm-img]: https://img.shields.io/badge/npm-lo-a0a060.svg?style=flat-square
-
-[npm-v-img]: https://img.shields.io/npm/v/lo.svg?style=flat-square
-[npm-dm-img]: https://img.shields.io/npm/dm/lo.svg?style=flat-square

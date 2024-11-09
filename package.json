@@ -1,8 +1,7 @@
 {
   "name": "lo",
-  "version": "0.41.0",
+  "version": "0.42.0",
   "description": "Lightweight utility library for the browser.",
-  "homepage": "https://larsjung.de/lo/",
   "author": "Lars Jung <lrsjng@gmail.com> (https://larsjung.de)",
   "license": "MIT",
   "repository": {
@@ -18,13 +17,14 @@
   },
   "main": "dist/lo.js",
   "devDependencies": {
-    "@babel/core": "7.10.5",
-    "@babel/preset-env": "7.10.4",
-    "eslint": "7.5.0",
-    "ghu": "0.25.0",
-    "jquery": "3.5.1",
-    "jsdom": "16.3.0",
-    "null-loader": "4.0.0",
-    "scar": "2.3.0"
+    "@babel/core": "7.26.0",
+    "@babel/preset-env": "7.26.0",
+    "eslint": "9.14.0",
+    "ghu": "0.28.5",
+    "globals": "15.12.0",
+    "jquery": "3.7.1",
+    "jsdom": "25.0.1",
+    "null-loader": "4.0.1",
+    "scar": "2.3.4"
   }
 }
